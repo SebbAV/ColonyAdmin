@@ -26,13 +26,15 @@ router.post('/', function (req, res) {
     {
         email: credentials.email,
         password: sha1HashedPassword,
-        nick: credentials.nick
+        first_name: credentials.first_name,
+        last_name: credentials.last_name,
+        address: credentials.address,
+        phone: credentials.phone,
+        role: credentials.role,
+        vehicle: credentials.vehicle
     }
     var registeredObject = {
-        $or: [
-            { email: credentials.email },
-            { nick: credentials.nick }
-        ]
+        email: credentials.email
     }
     mongodbHelper.findOne(registeredObject, "user").then(function (success) {
         if (!success) {
@@ -49,5 +51,27 @@ router.post('/', function (req, res) {
         responseHelper.respond(res, 500, error);
     });
 });
+router.post('/login', function (req, res) {
+    var credentials = req.body;
+    if (!credentials.email || !credentials.password) {
+        responseHelper.respond(res, 400, 'Bad request. The request was missing some parameters.');
+        return;
+    }
+    var sha1HashedPassword = crypto.createHash('sha1').update(credentials.password).digest('hex');
+    var object =
+    {
+        $and: [
+            { email: credentials.email },
+            { password: sha1HashedPassword }]
+    }
+    mongodbHelper.findOne(object, "user").then(function (success) {
+        if (!success)
+            responseHelper.respond(res, 404, "Not found", "Wrong email or password.");
+        else
+            responseHelper.respond(res, 200, undefined, success);
+    }).catch(function (error) {
+        responseHelper.respond(res, 500, error);
+    });
 
+});
 module.exports = router;
