@@ -2,10 +2,9 @@
     "port": 3009,
     "databases": {
       "development": {
-        "host": "1934-alcatraz-xgpuf.mongodb.net/test?retryWrites=true",
-        "database": "alcatraz",
-        "username": "Joche",
-        "password": "EwzVoQPaUymLwq0g"
+        "host": "localhost",
+        "database": "colony_admin",
+        "port": 27017
       },
       "production": {
         "host": "localhost",
