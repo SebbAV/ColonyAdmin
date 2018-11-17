@@ -7,7 +7,7 @@
 var config = require('config');
 var MongoClient = require('mongodb').MongoClient;
 function getUrl() {
-    return `mongodb://${config.databases.development.host}:${config.databases.development.port}/${config.databases.development.database}`
+    return `mongodb://${config.databases.development.host}:${config.databases.development.port}`
 }
 function getDB() {
     return config.databases.development.database;
