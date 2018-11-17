@@ -3,11 +3,10 @@
  * and launching commands
  */
 
-
 var config = require('config');
 var MongoClient = require('mongodb').MongoClient;
 function getUrl() {
-    return `mongodb://${config.databases.development.host}:${config.databases.development.port}`
+    return `mongodb+srv://${config.databases.development.username}:${config.databases.development.password}@${config.databases.development.host}`
 }
 function getDB() {
     return config.databases.development.database;
