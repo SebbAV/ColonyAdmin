@@ -6,13 +6,16 @@
     "start": "nodemon ./bin/www"
   },
   "dependencies": {
+    "config": "^2.0.1",
     "cookie-parser": "~1.4.3",
+    "crypto": "^1.0.1",
     "debug": "~2.6.9",
     "ejs": "~2.5.7",
     "express": "~4.16.0",
     "express-graphql": "^0.7.1",
     "graphql": "^14.0.2",
     "http-errors": "~1.6.2",
+    "mongodb": "^3.1.10",
     "morgan": "~1.9.0"
   }
 }
