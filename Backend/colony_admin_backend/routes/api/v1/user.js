@@ -14,6 +14,22 @@ router.get('/', function (req, res, next) {
         responseHelper.respond(res, 500, error);
     });
 });
+router.get('/get_by_role/:role', function (req, res, next) {
+    var role = req.params.role;
+    if (!role) {
+        responseHelper.respond(res, 400, 'Bad request. The request was missing some parameters.');
+        return;
+    }
+    var queryObject =
+    {
+        role: role
+    }
+    mongodbHelper.find(queryObject, "user").then(function (success) {
+        responseHelper.respond(res, 200, undefined, success);
+    }).catch(function (error) {
+        responseHelper.respond(res, 500, error);
+    });
+});
 router.post('/', function (req, res) {
     var credentials = req.body;
     if (!credentials.email ||
@@ -104,8 +120,6 @@ router.post('/forgot', function (req, res) {
     }).catch(function (error) {
         responseHelper.respond(res, 500, error);
     });
-
-
 });
 router.put('/password_reset', function (req, res) {
     var user = req.body;
@@ -122,7 +136,6 @@ router.put('/password_reset', function (req, res) {
     {
         password: sha1HashedPassword
     }
-
     mongodbHelper.findOne(object, "user").then(function (success) {
         if (!success) {
             responseHelper.respond(res, 400, "User don't exist.");
@@ -137,7 +150,31 @@ router.put('/password_reset', function (req, res) {
     }).catch(function (error) {
         responseHelper.respond(res, 500, error);
     });
-
+});
+router.put('/', function (req, res) {
+    var credentials = req.body;
+    if (!credentials.email ||
+        !credentials.first_name ||
+        !credentials.last_name ||
+        !credentials.password ||
+        !credentials.address ||
+        !credentials.phone ||
+        !credentials.role ||
+        !credentials.vehicle ||
+        !credentials._id) {
+        responseHelper.respond(res, 400, 'Bad request. The request was missing some parameters.');
+        return;
+    }
+    console.log(credentials)
+    var object =
+    {
+        _id: credentials._id
+    }
+    mongodbHelper.updateOne(object, credentials, "user").then(function (data) {
+        responseHelper.respond(res, 200, "User modified.", data)
+    }).catch(function (error) {
+        responseHelper.respond(res, 500, error);
+    });
 });
 router.get('/check_code/:code', function (req, res) {
     var code = req.params.code;
