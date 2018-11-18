@@ -8,7 +8,11 @@ var generator = require('generate-password');
 
 /* GET users listing. */
 router.get('/', function (req, res, next) {
-    res.send('respond with a resource');
+    mongodbHelper.find({}, "user").then(function (success) {
+        responseHelper.respond(res, 200, undefined, success);
+    }).catch(function (error) {
+        responseHelper.respond(res, 500, error);
+    });
 });
 router.post('/', function (req, res) {
     var credentials = req.body;
