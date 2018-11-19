@@ -38,8 +38,7 @@ router.post('/', function (req, res) {
         !credentials.password ||
         !credentials.address ||
         !credentials.phone ||
-        !credentials.role ||
-        !credentials.vehicle) {
+        !credentials.role) {
         responseHelper.respond(res, 400, 'Bad request. The request was missing some parameters.');
         return;
     }
