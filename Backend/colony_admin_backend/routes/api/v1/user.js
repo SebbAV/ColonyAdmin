@@ -164,11 +164,11 @@ router.put('/', function (req, res) {
         responseHelper.respond(res, 400, 'Bad request. The request was missing some parameters.');
         return;
     }
-    var ObjectId = mongodbHelper.ObjectId;
     var object =
     {
-        _id: ObjectId(credentials._id)
+        _id: mongodbHelper.ObjectId(credentials._id)
     }
+    delete credentials._id
     mongodbHelper.updateOne(object, credentials, "user").then(function (data) {
         responseHelper.respond(res, 200, "User modified.", data)
     }).catch(function (error) {
