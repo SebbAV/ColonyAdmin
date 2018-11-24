@@ -194,4 +194,21 @@ router.get('/check_code/:code', function (req, res) {
         responseHelper.respond(res, 500, error);
     });
 });
+router.get('/get_by_phone/:phone', (req,res,next)=>
+{
+    var phone = req.params.phone;
+    if (!phone) {
+        responseHelper.respond(res, 400, 'Bad request. The request was missing some parameters.');
+        return;
+    }
+    var queryObject =
+    {
+        phone: phone
+    }
+    mongodbHelper.find(queryObject, "user").then(function (success) {
+        responseHelper.respond(res, 200, undefined, success);
+    }).catch(function (error) {
+        responseHelper.respond(res, 500, error);
+    });
+});
 module.exports = router;
