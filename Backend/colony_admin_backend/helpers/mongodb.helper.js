@@ -119,5 +119,7 @@ module.exports = {
             });
         });
     },
-    ObjectId: require('mongodb').ObjectId
+    ObjectId: function (id) {
+        return new require('mongodb').ObjectId(id)
+    }
 }
