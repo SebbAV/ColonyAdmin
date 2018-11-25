@@ -13,7 +13,7 @@ module.exports =
                 from: '1934.aigame@gmail.com',
                 to: email,
                 subject: 'Renew Password 1934',
-                text: "code: " + code
+                text: "code: " + code.toUpperCase()
             };
             return new Promise((resolve, reject) => {
                 transporter.sendMail(mailOptions, function (error, info) {

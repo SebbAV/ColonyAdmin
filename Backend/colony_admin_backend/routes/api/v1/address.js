@@ -27,10 +27,23 @@ router.post('/', (req, res, next) => {
     });
 });
 router.get('/', (req, res, next) => {
+    var addresses = []
     mongodbHelper.find({}, "address").then((data) => {
-        responseHelper.respond(res, 200, undefined, data);
+        mongodbHelper.find({}, "user").then((users) => {
+            data.forEach(address => {
+                address.users = []
+                users.forEach(user => {
+                    if (address._id == user.address) {
+                        address.users.push(user);
+                    }
+                });
+            });
+            responseHelper.respond(res, 200, undefined, data);
+        }).catch((error) => {
+            responseHelper.respond(res, 500, error);
+        });
     }).catch((error) => {
         responseHelper.respond(res, 500, error);
-    })
+    });
 });
 module.exports = router;

@@ -36,23 +36,31 @@ router.post('/', function (req, res) {
         !credentials.first_name ||
         !credentials.last_name ||
         !credentials.password ||
-        !credentials.address ||
         !credentials.phone ||
         !credentials.role) {
         responseHelper.respond(res, 400, 'Bad request. The request was missing some parameters.');
         return;
     }
     var sha1HashedPassword = crypto.createHash('sha1').update(credentials.password).digest('hex');
+    console.log(credentials);
     var object =
     {
         email: credentials.email,
         password: sha1HashedPassword,
         first_name: credentials.first_name,
         last_name: credentials.last_name,
-        address: credentials.address,
+        address: credentials.object_address_uid,
+        address_number: credentials.address_number === null ? null : credentials.address_number,
         phone: credentials.phone,
         role: credentials.role,
         vehicle: credentials.vehicle
+    }
+    if (!object.address_number) {
+        delete object.address;
+        delete object.address_number;
+    }
+    if (!object.vehicle) {
+        delete object.vehicle
     }
     var registeredObject = {
         email: credentials.email
@@ -108,7 +116,7 @@ router.post('/forgot', function (req, res) {
     var object =
     {
         email: emailObject.email,
-        code: code
+        code: code.toUpperCase()
     }
     mongodbHelper.insertOne(object, "code").then(function (success) {
         forgotHelper.sendMail(emailObject.email, code).then(function (success) {
@@ -155,7 +163,6 @@ router.put('/', function (req, res) {
     if (!credentials.email ||
         !credentials.first_name ||
         !credentials.last_name ||
-        !credentials.password ||
         !credentials.address ||
         !credentials.phone ||
         !credentials.role ||
@@ -194,8 +201,7 @@ router.get('/check_code/:code', function (req, res) {
         responseHelper.respond(res, 500, error);
     });
 });
-router.get('/get_by_phone/:phone', (req,res,next)=>
-{
+router.get('/get_by_phone/:phone', (req, res, next) => {
     var phone = req.params.phone;
     if (!phone) {
         responseHelper.respond(res, 400, 'Bad request. The request was missing some parameters.');
