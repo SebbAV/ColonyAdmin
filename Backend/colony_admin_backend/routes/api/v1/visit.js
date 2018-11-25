@@ -81,6 +81,7 @@ router.post('/user/', (req, res, next) => {
                     address: neighbor.address,
                     entrance_date: dateHelper.getCurrentDatetime(),
                     exit_date: "",
+                    vehicle: visitor.vehicle,
                     object_invitation_uid: mongodbHelper.ObjectId(data._id),
                     object_neighbor_uid: mongodbHelper.ObjectId(neighbor._id),
                     object_visitor_uid: mongodbHelper.ObjectId(visitor._id)
@@ -105,19 +106,57 @@ router.post('/no_user/', (req, res, next) => {
     if (!visitor.first_name ||
         !visitor.last_name ||
         !visitor.vehicle ||
-        !visitor.address) {
+        !visitor.address ||
+        !visitor.address_number) {
         responseHelper.respond(res, 400, 'Bad request. The request was missing some parameters.');
         return;
     }
     mongodbHelper.insertOne(visitor, "visitor").then((data) => {
         var addressQuery = {
-            address: visitor.address
-        }
+            $and: [
+                { address: visitor.address },
+                { address_number: visitor.address_number }
+            ]
+        };
         mongodbHelper.findOne(addressQuery, "user").then((neighbor) => {
-
+            var visit = {
+                name: visitor.first_name,
+                address: neighbor.address,
+                entrance_date: dateHelper.getCurrentDatetime(),
+                exit_date: "",
+                vehicle: visitor.vehicle,
+                object_neighbor_uid: mongodbHelper.ObjectId(neighbor._id),
+                object_visitor_uid: mongodbHelper.ObjectId(data.ops[0]._id)
+            };
+            mongodbHelper.insertOne(visit, "visit").then((success) => {
+                responseHelper.respond(res, 200, undefined, success);
+            }).catch((error) => {
+                responseHelper.respond(res, 500, error);
+            })
         }).catch((error) => {
-
+            responseHelper.respond(res, 500, error);
         })
+    }).catch((error) => {
+        responseHelper.respond(res, 500, error);
+    });
+});
+router.post('/exit', (req, res, next) => {
+    var vehicle = req.body;
+    if (!vehicle.vehicle) {
+        responseHelper.respond(res, 400, 'Bad request. The request was missing some parameters.');
+        return;
+    }
+    var queryObject = {
+        vehicle: vehicle.vehicle
+    };
+    mongodbHelper.find(queryObject, "visit").then((data) => {
+        data.forEach(visit => {
+            mongodbHelper.updateOne(queryObject, { exit_date: dateHelper.getCurrentDatetime() }, "visit").then((success) => {
+                responseHelper.respond(res, 200, undefined, success);
+            }).catch((error) => {
+                responseHelper.respond(res, 500, error);
+            })
+        });
     }).catch((error) => {
         responseHelper.respond(res, 500, error);
     })
