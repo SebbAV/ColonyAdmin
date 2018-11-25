@@ -1,0 +1,45 @@
+body {
+    background-color:#292929
+}
+
+.center-panel {
+    position:fixed;
+    top: 30%;
+    left:34%;
+    width:30em;
+    height:18em;
+}
+.center-panel-2 {
+    position:fixed;
+    top: 10%;
+    left:34%;
+    width:30em;
+    height:18em;
+}
+.btn-primary{
+    background-color:#292929 !important
+}
+.panel-color{
+    background-color:#121212;
+    border : 0px;
+    color:white
+}
+input {
+    background:#656568 !important;
+    border:0px !important;
+    color: white !important;
+}
+a {
+    color: #b62a25 !important
+}
+
+.btn_N{
+    background:#292929;
+    width: 100%;
+    border:0px;
+}
+.btn_N:hover{
+    background:#38383a;
+    width: 100%;
+    border:0px;
+}
