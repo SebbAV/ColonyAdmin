@@ -6,3 +6,4 @@ io.sockets.on('connection', (socket) => {
         io.sockets.emit('sos_request', data);
     });
 });
+module.exports = io;
