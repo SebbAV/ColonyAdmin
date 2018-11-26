@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Panel, Button, Col, Row, Modal, Navbar, Nav, NavItem } from 'react-bootstrap'
 import { Field, reduxForm } from 'redux-form'
 import { bindActionCreators } from 'redux'
-import { registerUser,addUserAddress } from '../actions/index';
+import { registerUser, addUserAddress,getUsersByRole } from '../actions/index';
 
 import { connect } from 'react-redux';
 import RowMenu from './row_main'
@@ -25,6 +25,7 @@ class MainMenu extends Component {
 
     handleShow() {
         //console.log(this.state.login.data)
+        this.state.type == "Employees" && this.props.getUsersByRole()
         this.setState({ show: true });
     }
     renderField(field) {
@@ -53,9 +54,12 @@ class MainMenu extends Component {
     }
     onSubmit(values) {
         console.log(values)
-        this.props.addUserAddress(values, () => {
+        this.state.type == "Neighbors" && this.props.addUserAddress(values, () => {
             this.handleClose()
-        })
+        }) ||
+        this.state.type == "Employees" && this.props.registerUser(values, () => {
+            this.handleClose()
+        }) 
     }
     loadNavBar() {
         return (
@@ -68,16 +72,16 @@ class MainMenu extends Component {
                 </Navbar.Header>
                 <Navbar.Collapse>
                     <Nav>
-                        <NavItem onClick={()=> this.setState({type:"Employees"})} href="#">
+                        <NavItem onClick={() => this.setState({ type: "Employees" })} href="#">
                             Employees
                         </NavItem>
-                        <NavItem onClick={()=> this.setState({type:"Neighbors"})} href="#">
+                        <NavItem onClick={() => this.setState({ type: "Neighbors" })} href="#">
                             Neighbors
                         </NavItem>
-                        <NavItem onClick={()=> this.setState({type:"Guests"})} href="#">
+                        <NavItem onClick={() => this.setState({ type: "Guests" })} href="#">
                             Guests
                         </NavItem>
-                        <NavItem onClick={()=> this.setState({type:"SOS"})} href="#">
+                        <NavItem onClick={() => this.setState({ type: "SOS" })} href="#">
                             SOS
                         </NavItem>
                     </Nav>
@@ -98,10 +102,41 @@ class MainMenu extends Component {
                     <Modal.Body>
                         {/* TODO: Move modal form to a separate class */}
                         <form className="form-page" onSubmit={handleSubmit(this.onSubmit.bind(this))}>
-                            <Field
-                                label="Address"
-                                name="address"
-                                component={this.renderField} />
+                            {this.state.type == " Neighbors" &&
+                                <Field
+                                    label="Address"
+                                    name="address"
+                                    component={this.renderField} /> ||
+                                this.state.type == "Employees" &&
+                                <div>
+                                    <Field
+                                        label="Email"
+                                        name="email"
+                                        component={this.renderField} />
+                                    <Field
+                                        label="First Name"
+                                        name="first_name"
+                                        component={this.renderField} />
+                                    <Field
+                                        label="Last Name"
+                                        name="last_name"
+                                        component={this.renderField} />
+                                    <Field
+                                        label="Phone"
+                                        name="phone"
+                                        component={this.renderField} />
+                                    <Field
+                                        label="Password"
+                                        name="password"
+                                        component={this.passwordfield} />
+                                    <Field
+                                        label="Confirm password"
+                                        name="pwd-confirm"
+                                        component={this.passwordfield} />
+                                </div>
+
+                            }
+
                             <button type="submit" className="btn_N"> Add Address </button>
 
                         </form>
@@ -122,7 +157,7 @@ class MainMenu extends Component {
                         </Row>
                     </Panel.Heading>
                     <Panel.Body>
-                        <RowMenu type={this.state.type}/>
+                        <RowMenu type={this.state.type} />
                     </Panel.Body>
                 </Panel>
             </div >
@@ -151,4 +186,4 @@ function mapDispatchToProps(dispatch) {
 export default reduxForm({
     validate,
     form: "AddForm"
-})(connect(mapStateToProps, { registerUser,addUserAddress })(MainMenu))
+})(connect(mapStateToProps, { registerUser, addUserAddress,getUsersByRole })(MainMenu))

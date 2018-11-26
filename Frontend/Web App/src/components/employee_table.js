@@ -1,51 +1,67 @@
 import React, { Component } from 'react'
-import {Table} from 'react-bootstrap'
+import { Panel, Row, Col, Modal, Button } from 'react-bootstrap'
+import EmployeesTable from './employee_table'
+import { connect } from 'react-redux';
+import { getUsersByRole } from '../actions/index';
 class EmployeeTable extends Component {
+    componentDidMount() {
+        this.props.getUsersByRole()
+    }
+    loadUsers() {
+
+        if (this.props.users.users_role) {
+            let { users_role } = this.props.users
+            return _.map(users_role.data, user => {
+                console.log(user)
+                if (!user) {
+                    return (<h3>No users found </h3>)
+                }
+                else {
+                    return (
+                        <div key={user._id} >
+                            <Row>
+                                {console.log(user)}
+                                <Col xs={9} md={10}>
+                                    <label id="lblName">
+                                        {user.first_name} {user.last_name}
+                                    </label>
+                                </Col>
+                                <Col xs={9} md={10}>
+                                    <label id="lblAddress">
+                                        Phone Number : {user.phone}
+                                    </label>
+                                </Col>
+                                <Col xs={9} md={10}>
+                                    <label id="lblAddress">
+                                        Email : {user.email}
+                                    </label>
+                                </Col>
+                            </Row>
+                            <hr></hr>
+                        </div>
+                    )
+                }
+            })
+        }
+        else {
+            return <h4> Loading... </h4>
+        }
+    }
     render() {
+        console.log("First table render")
         return (
-            <Table responsive>
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Table heading</th>
-                        <th>Table heading</th>
-                        <th>Table heading</th>
-                        <th>Table heading</th>
-                        <th>Table heading</th>
-                        <th>Table heading</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                    </tr>
-                </tbody>
-            </Table>
+            <div>
+                {this.loadUsers()}
+            </div>
         )
     }
+
 }
-export default EmployeeTable
+function mapStateToProps(state) {
+    console.log(state)
+
+    return {
+        users: state.users
+    };
+}
+export default connect(mapStateToProps, { getUsersByRole })(EmployeeTable)

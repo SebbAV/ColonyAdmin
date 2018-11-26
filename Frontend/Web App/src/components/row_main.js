@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import { Panel, Row, Col, Modal,Button } from 'react-bootstrap'
+import { Panel, Row, Col, Modal, Button } from 'react-bootstrap'
 import EmployeesTable from './employee_table'
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form'
-import { getUsersByRole } from '../actions/index';
+import { getUserGroupedByAddress,getUsersByRole} from '../actions/index';
 import _ from 'lodash'
 
 const data = {
@@ -23,7 +23,7 @@ class RowMain extends Component {
         console.log('seh')
     }
     componentDidMount() {
-        this.props.getUsersByRole()
+        this.props.getUserGroupedByAddress()
     }
     editUser(user_id) {
         console.log(user_id)
@@ -48,32 +48,32 @@ class RowMain extends Component {
             </div>
         )
     }
-    loadUsers() {
-        if (this.props.users.users) {
-            return _.map(this.props.users.users.data, user => {
+    loadUsers(users) {
+        if (users) {
+            return _.map(users, user => {
                 console.log(user)
-                if (!user){
+                if (!user) {
                     return (<h3>No users found </h3>)
                 }
                 else {
-                return (
-                    <div key={user._id} >
-                        <Row>
-                            {console.log(user)}
-                            <Col xs={9} md={10}>
-                                <label id="lblName">
-                                    {user.first_name} {user.last_name}
-                                </label>
-                            </Col>
-                            <Col xs={9} md={10}>
-                                <label id="lblAddress">
-                                    {user.address}
-                                </label>
-                            </Col>
-                        </Row>
-                        <hr></hr>
-                    </div>
-                )
+                    return (
+                        <div key={user._id} >
+                            <Row>
+                                {console.log(user)}
+                                <Col xs={9} md={10}>
+                                    <label id="lblName">
+                                        {user.first_name} {user.last_name}
+                                    </label>
+                                </Col>
+                                <Col xs={9} md={10}>
+                                    <label id="lblAddress">
+                                        Address : {user.address_number}
+                                    </label>
+                                </Col>
+                            </Row>
+                            <hr></hr>
+                        </div>
+                    )
                 }
             })
         }
@@ -81,17 +81,37 @@ class RowMain extends Component {
             return <h4> Loading... </h4>
         }
     }
+    loadNeighborPanels() {
+        if (this.props.users.users) {
+            return _.map(this.props.users.users.data, address => {
+                if (!address) {
+                    return (<h3>No users found </h3>)
+                }
+                if(address.users.length == 0){
+                    
+                }
+                else {
+                    return (
+                        <div key={address._id} >
+                            <Panel>
+                                <Panel.Heading>
+                                    <h2>{address.address}</h2>
+                                </Panel.Heading>
+                                <Panel.Body>
+                                    {this.loadUsers(address.users)}
+                                </Panel.Body>
+                            </Panel>
+                        </div>
+                    )
+                }
+            })
+
+        }
+    }
     neighborMenu() {
         return (
             <div>
-                <Panel>
-                    <Panel.Heading>
-                        <h2>Address #</h2>
-                    </Panel.Heading>
-                    <Panel.Body>
-                        {this.loadUsers()}
-                    </Panel.Body>
-                </Panel>
+                {this.loadNeighborPanels()}
             </div >
         )
     }
@@ -226,4 +246,4 @@ function validate(values) {
 export default reduxForm({
     validate,
     form: "modularForm"
-})(connect(mapStateToProps, { getUsersByRole })(RowMain))
+})(connect(mapStateToProps, { getUsersByRole,getUserGroupedByAddress })(RowMain))
