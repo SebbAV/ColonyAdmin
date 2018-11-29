@@ -151,11 +151,13 @@ router.post('/exit', (req, res, next) => {
     };
     mongodbHelper.find(queryObject, "visit").then((data) => {
         data.forEach(visit => {
-            mongodbHelper.updateOne(queryObject, { exit_date: dateHelper.getCurrentDatetime() }, "visit").then((success) => {
-                responseHelper.respond(res, 200, undefined, success);
-            }).catch((error) => {
-                responseHelper.respond(res, 500, error);
-            })
+            if (!visit.exit_date) {
+                mongodbHelper.updateOne(queryObject, { exit_date: dateHelper.getCurrentDatetime() }, "visit").then((success) => {
+                    responseHelper.respond(res, 200, undefined, success);
+                }).catch((error) => {
+                    responseHelper.respond(res, 500, error);
+                })
+            }
         });
     }).catch((error) => {
         responseHelper.respond(res, 500, error);
