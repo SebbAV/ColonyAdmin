@@ -45,7 +45,7 @@ class Login extends Component {
     render() {
         const { handleSubmit } = this.props
         return (
-            <div className="containe center-panel">
+            <div className="container center-panel">
                 <Panel className="panel-color">
                     <Panel.Body>
                         <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>

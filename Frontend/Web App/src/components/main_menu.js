@@ -1,11 +1,15 @@
 import React, { Component } from 'react'
 import { Panel, Button, Col, Row, Modal, Navbar, Nav, NavItem } from 'react-bootstrap'
 import { Field, reduxForm } from 'redux-form'
+import { Formik, Form, Field as FormikField, ErrorMessage } from 'formik'
 import { bindActionCreators } from 'redux'
-import { registerUser, addUserAddress,getUsersByRole } from '../actions/index';
+import { registerUser, addUserAddress, getUsersByRole, createVisit, loadAddress } from '../actions/index';
 
 import { connect } from 'react-redux';
 import RowMenu from './row_main'
+const colors = [{ color: 'Red', value: 'ff0000' },
+{ color: 'Green', value: '00ff00' },
+{ color: 'Blue', value: '0000ff' }]
 class MainMenu extends Component {
     constructor(props, context) {
         super(props, context);
@@ -16,15 +20,17 @@ class MainMenu extends Component {
         this.state = {
             show: false,
             panel_title: "Seh",
-            type: "Neighbor"
+            type: "Neighbors"
         }
+    }
+    componentDidMount() {
+        this.props.loadAddress();
     }
     handleClose() {
         this.setState({ show: false });
     }
 
     handleShow() {
-        //console.log(this.state.login.data)
         this.state.type == "Employees" && this.props.getUsersByRole()
         this.setState({ show: true });
     }
@@ -53,13 +59,15 @@ class MainMenu extends Component {
         )
     }
     onSubmit(values) {
-        console.log(values)
         this.state.type == "Neighbors" && this.props.addUserAddress(values, () => {
             this.handleClose()
         }) ||
-        this.state.type == "Employees" && this.props.registerUser(values, () => {
-            this.handleClose()
-        }) 
+            this.state.type == "Employees" && this.props.registerUser(values, () => {
+                this.handleClose()
+            }) ||
+            this.state.type == "Guests" && this.props.createVisit(values, () => {
+                this.handleClose()
+            })
     }
     loadNavBar() {
         return (
@@ -86,14 +94,28 @@ class MainMenu extends Component {
                         </NavItem>
                     </Nav>
                 </Navbar.Collapse>
-            </Navbar>
+            </Navbar >
         )
+    }
+    loadOptions() {
+        console.log("--------------------------------------")
+        console.log(this.props.address)
+        if (this.props.address.addresses) {
+            return _.map(this.props.address.addresses.data, address => {
+                return (<option value={address._id} key={address._id}>{address.address}</option>)
+            })
+        }
+        else {
+            return <option>Empty</option>
+        }
+
     }
     render() {
         const { handleSubmit } = this.props
-        console.log(this.props.login)
+        console.log("renders")
+        console.log(this.state.type)
         return (
-            <div>
+            <div >
                 {this.loadNavBar()}
                 <Modal show={this.state.show} onHide={this.handleClose}>
                     <Modal.Header closeButton>
@@ -101,52 +123,116 @@ class MainMenu extends Component {
                     </Modal.Header>
                     <Modal.Body>
                         {/* TODO: Move modal form to a separate class */}
-                        <form className="form-page" onSubmit={handleSubmit(this.onSubmit.bind(this))}>
-                            {this.state.type == " Neighbors" &&
-                                <Field
-                                    label="Address"
-                                    name="address"
-                                    component={this.renderField} /> ||
-                                this.state.type == "Employees" &&
-                                <div>
-                                    <Field
-                                        label="Email"
-                                        name="email"
-                                        component={this.renderField} />
-                                    <Field
-                                        label="First Name"
-                                        name="first_name"
-                                        component={this.renderField} />
-                                    <Field
-                                        label="Last Name"
-                                        name="last_name"
-                                        component={this.renderField} />
-                                    <Field
-                                        label="Phone"
-                                        name="phone"
-                                        component={this.renderField} />
-                                    <Field
-                                        label="Password"
-                                        name="password"
-                                        component={this.passwordfield} />
-                                    <Field
-                                        label="Confirm password"
-                                        name="pwd-confirm"
-                                        component={this.passwordfield} />
-                                </div>
+                        {/* <form className="form-page" onSubmit={handleSubmit(this.onSubmit.bind(this))}> */}
+                        {this.state.type == "Neighbors" &&
+                            <div>
 
-                            }
+                                <Formik initialValues={{ first_name: '', last_name: '', vehicle: '', address: '', address_number: '' }}
+                                    onSubmit={(values, { setSubmitting }) => {
+                                        setTimeout(() => {
+                                            alert(JSON.stringify(values, null, 2));
+                                            setSubmitting(false);
+                                            this.props.registerUser(values)
+                                        }, 400);
+                                    }}>
 
-                            <button type="submit" className="btn_N"> Add Address </button>
+                                    {({
+                                        values,
+                                        handleChange,
+                                        handleBlur,
+                                        handleSubmit,
+                                        isSubmitting,
+                                    }) => (
+                                            <Form>
+                                                <FormikField name="email" />
+                                                <FormikField name="first_name" />
+                                                <FormikField name="last_name" />
+                                                <FormikField name="phone" />
+                                                <FormikField name="password" />
+                                                <button type="submit" disabled={isSubmitting}>
+                                                    Submit
+                                           </button>
+                                            </Form>
+                                        )}
+                                </Formik>
+                            </div> ||
+                            this.state.type == "Employees" &&
+                            <div>
+                                <Formik initialValues={{ first_name: '', last_name: '', vehicle: '', address: '', address_number: '' }}
+                                    onSubmit={(values, { setSubmitting }) => {
+                                        setTimeout(() => {
+                                            alert(JSON.stringify(values, null, 2));
+                                            setSubmitting(false);
+                                            this.props.registerUser(values)
+                                        }, 400);
+                                    }}>
 
-                        </form>
+                                    {({
+                                        values,
+                                        handleChange,
+                                        handleBlur,
+                                        handleSubmit,
+                                        isSubmitting,
+                                    }) => (
+                                            <Form>
+                                                <FormikField name="email" />
+                                                <FormikField name="first_name" />
+                                                <FormikField name="last_name" />
+                                                <FormikField name="phone" />
+                                                <FormikField name="password" />
+                                                <button type="submit" disabled={isSubmitting}>
+                                                    Submit
+                                                 </button>
+                                            </Form>
+                                        )}
+                                </Formik>
+                            </div>
+                            ||
+                            this.state.type == "Guests" &&
+                            <div>
+                                <Formik initialValues={{ first_name: '', last_name: '', vehicle: '', address: '', address_number: '' }}
+                                    onSubmit={(values, { setSubmitting }) => {
+                                        setTimeout(() => {
+                                            alert(JSON.stringify(values, null, 2));
+                                            setSubmitting(false);
+                                            this.props.createVisit(values)
+                                        }, 400);
+                                    }}>
+
+                                    {({
+                                        values,
+                                        handleChange,
+                                        handleBlur,
+                                        handleSubmit,
+                                        isSubmitting,
+                                    }) => (
+                                            <Form>
+                                                <FormikField name="first_name" />
+                                                <FormikField name="last_name" />
+                                                <FormikField name="vehicle" />
+                                                <FormikField component="select" name="address" >
+                                                    {this.loadOptions()}
+                                                </FormikField>
+                                                <FormikField name="address_number" />
+                                                <button type="submit" disabled={isSubmitting}>
+                                                    Submit
+                                                     </button>
+                                            </Form>
+                                        )}
+                                </Formik>
+                            </div>
+                        }
+
+                        {/* <button type="submit" className="btn_N"> Add Address </button> */}
+
+                        {/* </form> */}
                     </Modal.Body>
                     <Modal.Footer>
                         <Button onClick={this.handleClose}>Close</Button>
                     </Modal.Footer>
                 </Modal>
-                <Panel>
-                    <Panel.Heading>
+                <Panel className="margin-panel" bsClass="panel-color">
+                    <Panel.Heading >
                         <Row>
                             <Col md={8}>
                                 <h3>{this.state.type ? this.state.type : 'Default Title'}</h3>
@@ -171,10 +257,9 @@ function validate(values) {
     return errors;
 }
 function mapStateToProps(state) {
-    console.log(state)
-
     return {
-        login: state.login
+        login: state.login,
+        address: state.addresses
     };
 }
 
@@ -186,4 +271,4 @@ function mapDispatchToProps(dispatch) {
 export default reduxForm({
     validate,
     form: "AddForm"
-})(connect(mapStateToProps, { registerUser, addUserAddress,getUsersByRole })(MainMenu))
+})(connect(mapStateToProps, { registerUser, addUserAddress, getUsersByRole, createVisit, loadAddress })(MainMenu))
