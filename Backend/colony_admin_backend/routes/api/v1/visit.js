@@ -147,25 +147,15 @@ router.post('/exit', (req, res, next) => {
         return;
     }
     var queryObject = {
-        vehicle: vehicle.vehicle
+        $and: [
+            { vehicle: vehicle.vehicle },
+            { exit_date: "" }
+        ]
     };
-    mongodbHelper.find(queryObject, "visit").then((data) => {
-        var cont = 0
-        data.forEach(visit => {
-            if (!visit.exit_date) {
-                mongodbHelper.updateOne(queryObject, { exit_date: dateHelper.getCurrentDatetime() }, "visit").then((success) => {
-                    check = true;
-                }).catch((error) => {
-                    responseHelper.respond(res, 500, error);
-                });
-            }
-            cont++;
-        });
-        if (cont == data.length) {
-            responseHelper.respond(res, 200, undefined, "visit registered");
-        }
+    mongodbHelper.updateMany(queryObject, { exit_date: dateHelper.getCurrentDatetime() }, "visit").then((success) => {
+        responseHelper.respond(res, 200, undefined, success);
     }).catch((error) => {
         responseHelper.respond(res, 500, error);
-    })
+    });
 });
 module.exports = router;
