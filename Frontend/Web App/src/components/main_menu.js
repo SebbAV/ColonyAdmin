@@ -29,7 +29,6 @@ class MainMenu extends Component {
     handleClose() {
         this.setState({ show: false });
     }
-
     handleShow() {
         this.state.type == "Employees" && this.props.getUsersByRole()
         this.setState({ show: true });

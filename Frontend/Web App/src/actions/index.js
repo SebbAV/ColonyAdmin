@@ -11,6 +11,7 @@ export const ADD_ADDRESS = 'add_address';
 export const LOAD_EMP = 'load_emp';
 export const ADD_VISIT = 'add_visit';
 export const GET_ADDRESS ='get_address';
+export const GET_VISITORS ='get_visitors';
 
 export function loginUser(values, callback) {
     return (axios.post(`${API_URL}/v1/user/login`, values).then((response) => {
@@ -65,6 +66,14 @@ export function createVisit(values, callback) {
             payload: response
         }                                                                                                                                                                                                                                                                                                                                                                                                       
     }))
+}
+export function loadVisitors(){
+
+    const request =  axios.get(`${API_URL}/v1/visit`)
+    return {
+        type: GET_VISITORS,
+        payload: request
+    }
 }
 export function loadAddress(values){
 
