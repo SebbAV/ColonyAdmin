@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ForgotPassword.EmailForgotFragment"
+    android:orientation="vertical"
+    android:gravity="center_vertical">
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="@string/registered_codeid"
+        android:textColor="@color/colorPrimaryWhite"
+        android:textSize="17sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        >
+        <EditText
+        android:id="@+id/forgotPassword_edtChar1"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="5dp"
+            android:textAlignment="center"
+            android:hint="A"
+            android:singleLine="true"
+            android:background="@drawable/rounded_button"
+            android:drawablePadding="8dp"
+            android:gravity="center_vertical"
+            android:inputType="textCapWords"
+            android:padding="10dp"
+            android:textColor="@color/colorPrimaryWhite"
+            android:textColorHint="@color/colorAccentLightGray"
+            android:textSize="16sp"
+            android:layout_gravity="center_horizontal"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:maxLength="1"
+            />
+        <EditText
+            android:id="@+id/forgotPassword_edtChar2"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="5dp"
+            android:textAlignment="center"
+            android:layout_marginRight="10dp"
+            android:hint="A"
+            android:singleLine="true"
+            android:background="@drawable/rounded_button"
+            android:drawablePadding="8dp"
+            android:gravity="center_vertical"
+            android:inputType="textCapWords"
+            android:padding="10dp"
+            android:textColor="@color/colorPrimaryWhite"
+            android:textColorHint="@color/colorAccentLightGray"
+            android:textSize="16sp"
+            android:layout_gravity="center_horizontal"
+            android:maxLength="1"/>
+        <EditText
+            android:id="@+id/forgotPassword_edtChar3"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="5dp"
+            android:textAlignment="center"
+            android:layout_marginRight="10dp"
+            android:hint="A"
+            android:singleLine="true"
+            android:background="@drawable/rounded_button"
+            android:drawablePadding="8dp"
+            android:gravity="center_vertical"
+            android:inputType="textCapWords"
+            android:padding="10dp"
+            android:textColor="@color/colorPrimaryWhite"
+            android:textColorHint="@color/colorAccentLightGray"
+            android:textSize="16sp"
+            android:layout_gravity="center_horizontal"
+            android:maxLength="1"/>
+        <EditText
+            android:id="@+id/forgotPassword_edtChar4"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="5dp"
+            android:textAlignment="center"
+            android:layout_marginRight="10dp"
+            android:hint="A"
+            android:singleLine="true"
+            android:background="@drawable/rounded_button"
+            android:drawablePadding="8dp"
+            android:gravity="center_vertical"
+            android:inputType="textCapWords"
+            android:padding="10dp"
+            android:textColor="@color/colorPrimaryWhite"
+            android:textColorHint="@color/colorAccentLightGray"
+            android:textSize="16sp"
+            android:layout_gravity="center_horizontal"
+            android:maxLength="1"/>
+        <EditText
+            android:id="@+id/forgotPassword_edtChar5"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="5dp"
+            android:textAlignment="center"
+            android:hint="A"
+            android:singleLine="true"
+            android:background="@drawable/rounded_button"
+            android:drawablePadding="8dp"
+            android:gravity="center_vertical"
+            android:inputType="textCapWords"
+            android:padding="10dp"
+            android:textColor="@color/colorPrimaryWhite"
+            android:textColorHint="@color/colorAccentLightGray"
+            android:textSize="16sp"
+            android:layout_gravity="center_horizontal"
+            android:maxLength="1"/>
+
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/forgotPassword_resendmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+
+        android:padding="10dp"
+        android:text="@string/resend_code_email"
+        android:textColor="@color/colorPrimaryWhite"
+        android:textSize="15sp" />
+
+
+    <Button
+        android:id="@+id/forgotPassword_code_confirm"
+        android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="3dp"
+    android:background="@drawable/rounded_button"
+    android:padding="3dp"
+    android:text="Confirmar"
+    android:textColor="@color/colorPrimaryWhite"
+    android:textSize="17sp"
+    android:textStyle="bold" />
+
+
+
+</LinearLayout>

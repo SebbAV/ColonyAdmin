@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".GuestList.GuestListFragment">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbarGuestList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textAlignment="center"
+        android:background="@color/colorPrimary"
+        app:titleTextColor="@color/colorPrimaryWhite"
+        app:popupTheme="@style/AppTheme.PopupOverlay"
+
+        android:clickable="false"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="LISTA"
+            android:layout_gravity="center"
+            style="@style/MyActionBarTitle"
+            android:id="@+id/toolbar_title"
+            android:clickable="false"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:layout_gravity="right"
+            style="?android:attr/borderlessButtonStyle"
+            android:id="@+id/btnToolbarAddGuest"
+            android:src="@drawable/ic_new_user"
+            />
+    </android.support.v7.widget.Toolbar>
+
+    <!-- TODO: Update blank fragment layout -->
+
+
+</FrameLayout>

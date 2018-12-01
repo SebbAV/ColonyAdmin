@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ForgotPassword.EmailForgotFragment"
+    android:orientation="vertical"
+    android:gravity="center_vertical">
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="@string/registered_emailid"
+        android:textColor="@color/colorPrimaryWhite"
+        android:textSize="17sp" />
+
+    <EditText
+        android:id="@+id/forgotPassword_edtEmail"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:singleLine="true"
+        android:background="@android:color/transparent"
+        android:drawableLeft="@drawable/ic_email"
+        android:drawablePadding="8dp"
+        android:gravity="center_vertical"
+        android:hint="@string/email"
+        android:inputType="textEmailAddress"
+        android:padding="10dp"
+        android:textColor="@color/colorPrimaryWhite"
+        android:textColorHint="@color/colorAccentLightGray"
+        android:textSize="16sp" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:background="@color/colorAccentRed" />
+
+    <Button
+        android:id="@+id/forgotPassword_confirm"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:background="@drawable/rounded_button"
+        android:padding="3dp"
+        android:text="Confirmar"
+        android:textColor="@color/colorPrimaryWhite"
+        android:textSize="17sp"
+        android:textStyle="bold" />
+</LinearLayout>
