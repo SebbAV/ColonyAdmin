@@ -1,11 +1,10 @@
 var express = require('express');
 var router = express.Router();
-var crypto = require('crypto');
 var mongodbHelper = require('../../../helpers/mongodb.helper');
 var responseHelper = require('../../../helpers/response.helper');
-var forgotHelper = require('../../../helpers/forgot.helper');
 var generator = require('generate-password');
 var dateHelper = require('../../../helpers/date.helper');
+var socketClientHelper = require('../../../helpers/socket.io-client.helper');
 
 router.post('/assign_code/', function (req, res, next) {
     var credentials = req.body;
@@ -46,6 +45,7 @@ router.get('/', (req, res, next) => {
 router.post('/user/', (req, res, next) => {
     var invitation = req.body;
     if (!invitation.code) {
+        socketClientHelper.allowEntrance(false);
         responseHelper.respond(res, 404, "No invitation code");
         return;
     }
@@ -54,6 +54,7 @@ router.post('/user/', (req, res, next) => {
     }
     mongodbHelper.findOne(object, "invitation").then((data) => {
         if (!data) {
+            socketClientHelper.allowEntrance(false);
             responseHelper.respond(res, 404, "No invitation code");
             return;
         }
@@ -63,6 +64,7 @@ router.post('/user/', (req, res, next) => {
         }
         mongodbHelper.findOne(userQuery, "user").then((visitor) => {
             if (!visitor) {
+                socketClientHelper.allowEntrance(false);
                 responseHelper.respond(res, 404, "No existing user");
                 return;
             }
@@ -72,6 +74,7 @@ router.post('/user/', (req, res, next) => {
             }
             mongodbHelper.findOne(userQuery, "user").then((neighbor) => {
                 if (!neighbor) {
+                    socketClientHelper.allowEntrance(false);
                     responseHelper.respond(res, 404, "No existing user");
                     return;
                 }
@@ -87,17 +90,22 @@ router.post('/user/', (req, res, next) => {
                     object_visitor_uid: mongodbHelper.ObjectId(visitor._id)
                 }
                 mongodbHelper.insertOne(visit, "visit").then((success) => {
+                    socketClientHelper.allowEntrance(true);
                     responseHelper.respond(res, 200, undefined, success);
                 }).catch((error) => {
+                    socketClientHelper.allowEntrance(false);
                     responseHelper.respond(res, 500, error);
                 })
             }).catch((error) => {
+                socketClientHelper.allowEntrance(false);
                 responseHelper.respond(res, 500, error);
             })
         }).catch((error) => {
+            socketClientHelper.allowEntrance(false);
             responseHelper.respond(res, 500, error);
         })
     }).catch((error) => {
+        socketClientHelper.allowEntrance(false);
         responseHelper.respond(res, 500, error);
     });
 });
@@ -108,6 +116,7 @@ router.post('/no_user/', (req, res, next) => {
         !visitor.vehicle ||
         !visitor.address ||
         !visitor.address_number) {
+        socketClientHelper.allowEntrance(false);
         responseHelper.respond(res, 400, 'Bad request. The request was missing some parameters.');
         return;
     }
@@ -129,14 +138,18 @@ router.post('/no_user/', (req, res, next) => {
                 object_visitor_uid: mongodbHelper.ObjectId(data.ops[0]._id)
             };
             mongodbHelper.insertOne(visit, "visit").then((success) => {
+                socketClientHelper.allowEntrance(true);
                 responseHelper.respond(res, 200, undefined, success);
             }).catch((error) => {
+                socketClientHelper.allowEntrance(false);
                 responseHelper.respond(res, 500, error);
             })
         }).catch((error) => {
+            socketClientHelper.allowEntrance(false);
             responseHelper.respond(res, 500, error);
         })
     }).catch((error) => {
+        socketClientHelper.allowEntrance(false);
         responseHelper.respond(res, 500, error);
     });
 });
@@ -153,8 +166,10 @@ router.post('/exit', (req, res, next) => {
         ]
     };
     mongodbHelper.updateMany(queryObject, { exit_date: dateHelper.getCurrentDatetime() }, "visit").then((success) => {
+        socketClientHelper.allowEntrance(true);
         responseHelper.respond(res, 200, undefined, success);
     }).catch((error) => {
+        socketClientHelper.allowEntrance(false);
         responseHelper.respond(res, 500, error);
     });
 });
