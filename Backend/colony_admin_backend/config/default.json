@@ -1,5 +1,6 @@
 {
   "port": 3000,
+  "socket_server": "http://akarokhome.ddns.net:3000",
   "databases": {
     "development": {
       "host": "1934-alcatraz-xgpuf.mongodb.net/test?retryWrites=true",
