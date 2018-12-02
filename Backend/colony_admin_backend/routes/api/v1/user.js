@@ -217,4 +217,22 @@ router.get('/get_by_phone/:phone', (req, res, next) => {
         responseHelper.respond(res, 500, error);
     });
 });
+router.get('/get_visitors/:idUser', (req, res, next) => {
+    var idUser = req.params.idUser;
+    if (!idUser) {
+        responseHelper.respond(res, 400, 'Bad request. The request was missing some parameters.');
+        return;
+    }
+    var queryObject = {
+        $and: [
+            { object_neighbor_uid: mongodbHelper.ObjectId(idUser) },
+            { exit_date: "" }
+        ]
+    };
+    mongodbHelper.find(queryObject, 'visit').then((success) => {
+        responseHelper.respond(res, 200, undefined, success);
+    }).catch((error) => {
+        responseHelper.respond(res, 500, error);
+    });
+});
 module.exports = router;
