@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -14,7 +14,6 @@
         android:background="@color/colorPrimary"
         app:titleTextColor="@color/colorPrimaryWhite"
         app:popupTheme="@style/AppTheme.PopupOverlay"
-
         android:clickable="false"
         >
         <TextView
@@ -35,10 +34,30 @@
             style="?android:attr/borderlessButtonStyle"
             android:id="@+id/btnToolbarAddGuest"
             android:src="@drawable/ic_new_user"
+
             />
     </android.support.v7.widget.Toolbar>
 
     <!-- TODO: Update blank fragment layout -->
 
+    <ListView
+        android:paddingTop="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-</FrameLayout>
+    </ListView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="24dp"
+        android:layout_marginRight="24dp"
+        android:src="@drawable/ic_sos_warning"
+        android:id="@+id/guestlist_sosfab"
+        />
+
+
+
+</RelativeLayout>

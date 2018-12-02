@@ -6,10 +6,15 @@
         android:icon="@drawable/ic_guest_list"
         android:title="Invitados"/>
 
+    <item
+        android:id="@+id/navigation_map"
+        android:icon="@drawable/ic_map"
+        android:title="Perfil"/>
 
     <item
         android:id="@+id/navigation_profile"
         android:icon="@drawable/ic_profile"
         android:title="Perfil"/>
+
 
 </menu>

@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/imgUser"
             android:text="Cambiar Contraseña"
-            android:id="@+id/btnChangePassword"
+            android:id="@+id/profile_btnChangePassword"
             android:layout_marginTop="30dp"
             android:background="@drawable/rounded_button"
             android:paddingRight="10dp"
@@ -44,13 +44,13 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/btnChangePassword"
+            android:layout_below="@+id/profile_btnChangePassword"
             android:text="Cerrar Sesión"
             android:drawableLeft="@drawable/ic_logout"
             android:paddingRight="10dp"
             android:background="@drawable/rounded_button"
             android:paddingLeft="10dp"
-            android:id="@+id/btnSignOut"/>
+            android:id="@+id/profile_btnSignOut"/>
     </RelativeLayout>
 
 </FrameLayout>

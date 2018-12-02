@@ -132,7 +132,7 @@ class LoginActivity : AppCompatActivity() {
                 else{
                     Toast.makeText(activity, t.message, Toast.LENGTH_LONG).show()
                 }
-
+                snackbar.dismiss()
             }
         })
 

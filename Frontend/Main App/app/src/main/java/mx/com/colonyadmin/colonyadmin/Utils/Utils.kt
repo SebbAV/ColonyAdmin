@@ -13,6 +13,7 @@ class Utils {
 
     val GuestList = "GuestList"
     val ProfileFragment = "Profile"
+    val MapFragment = "Map"
     companion object {
         val URL = "http://akarokhome.ddns.net:3000/v1/"
     }

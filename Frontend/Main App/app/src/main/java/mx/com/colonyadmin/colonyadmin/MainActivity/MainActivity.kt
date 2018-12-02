@@ -4,14 +4,30 @@ import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
+import com.github.nkzawa.socketio.client.IO
+import com.github.nkzawa.socketio.client.Socket
 import mx.com.colonyadmin.colonyadmin.GuestList.GuestListFragment
+import mx.com.colonyadmin.colonyadmin.MapFragment.MapFragment
 import mx.com.colonyadmin.colonyadmin.ProfileFragment.ProfileFragment
 import mx.com.colonyadmin.colonyadmin.R
 import mx.com.colonyadmin.colonyadmin.Utils.Utils
+import java.net.URISyntaxException
 
-class MainActivity : AppCompatActivity(), ProfileFragment.OnFragmentInteractionListener, GuestListFragment.OnFragmentInteractionListener {
+class MainActivity : AppCompatActivity(), ProfileFragment.OnFragmentInteractionListener, GuestListFragment.OnFragmentInteractionListener, MapFragment.OnFragmentInteractionListener {
 
     public lateinit var utils  : Utils
+
+    private var mSocket: Socket? = null
+    //Inicialization of socket io
+        fun intializeSocket(): Socket?{
+            try {
+                mSocket = IO.socket("http://akarokhome.ddns.net:3000")
+                return mSocket
+            } catch (e: URISyntaxException) {
+                return null
+            }
+        }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +56,12 @@ class MainActivity : AppCompatActivity(), ProfileFragment.OnFragmentInteractionL
             R.id.navigation_profile -> {
                 val fragment = ProfileFragment.newInstance()
                 utils.addFragmentToActivity(this,this.supportFragmentManager,fragment, R.id.mainFrameLayout, utils.ProfileFragment)
+                return@OnNavigationItemSelectedListener true
+            }
+
+            R.id.navigation_map -> {
+                val fragment = MapFragment.newInstance()
+                utils.addFragmentToActivity(this,this.supportFragmentManager,fragment, R.id.mainFrameLayout, utils.MapFragment)
                 return@OnNavigationItemSelectedListener true
             }
         }

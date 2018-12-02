@@ -31,7 +31,9 @@
 
     <string name="guest_list">Lista de invitados</string>
     <string name="profile">Perfil</string>
+    <string name="map_title">Mapa</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="google_maps_key">AIzaSyDTeNiTc0Qu9CsQZBTapYCLVQqqPbO2pHI</string>
 </resources>
