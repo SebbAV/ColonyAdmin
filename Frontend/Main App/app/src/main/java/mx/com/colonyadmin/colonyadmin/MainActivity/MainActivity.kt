@@ -12,7 +12,6 @@ import android.support.v7.app.AlertDialog
 import android.widget.ProgressBar
 import com.github.nkzawa.socketio.client.IO
 import com.github.nkzawa.socketio.client.Socket
-import mx.com.colonyadmin.colonyadmin.SosDialog.DialogSosFragment
 import mx.com.colonyadmin.colonyadmin.GuestList.GuestListFragment
 import mx.com.colonyadmin.colonyadmin.LoginActivity.LoginActivity
 import mx.com.colonyadmin.colonyadmin.MapFragment.MapFragment
@@ -20,13 +19,16 @@ import mx.com.colonyadmin.colonyadmin.ProfileFragment.ProfileFragment
 import mx.com.colonyadmin.colonyadmin.R
 import mx.com.colonyadmin.colonyadmin.Services.*
 import mx.com.colonyadmin.colonyadmin.Utils.Utils
+import org.json.JSONObject
 import java.net.URISyntaxException
 
-class MainActivity : AppCompatActivity(), ProfileFragment.OnFragmentInteractionListener, GuestListFragment.OnFragmentInteractionListener, MapFragment.OnFragmentInteractionListener, DialogSosFragment.OnFragmentInteractionListener {
+class MainActivity : AppCompatActivity(), ProfileFragment.OnFragmentInteractionListener, GuestListFragment.OnFragmentInteractionListener, MapFragment.OnFragmentInteractionListener {
 
     lateinit var utils  : Utils
     private lateinit var progressDialog: ProgressDialog
     lateinit var _idUser : String
+    lateinit var _addressUser:String
+    lateinit var _addressNumber:String
     private var mSocket: Socket? = intializeSocket()
 
     private var lstGuests: MutableList<DataXXXXXX>? = null
@@ -65,8 +67,15 @@ class MainActivity : AppCompatActivity(), ProfileFragment.OnFragmentInteractionL
         }
         val b = intent.extras
         // or other values
-        if (b != null)
+        if (b != null) {
             _idUser = b.getString("_id")
+            _addressUser = b.getString("_address")
+            _addressNumber = b.getString("address_number")
+        }
+        else{
+            val intent = Intent(this.baseContext, LoginActivity::class.java)
+            startActivity(intent)
+        }
         val bottomNavigation: BottomNavigationView = findViewById(R.id.navigationView)
         //Inicializamos el dialog para cargar a los invitados
         showLoading()
@@ -138,6 +147,15 @@ class MainActivity : AppCompatActivity(), ProfileFragment.OnFragmentInteractionL
 
     fun getListGuests() : MutableList<DataXXXXXX>?{
         return lstGuests
+    }
+
+    //Socket IO functionality
+    fun getHelp(){
+
+        val rootObject= JSONObject()
+        rootObject.put("address",_addressUser)
+        rootObject.put("address_number",_addressNumber)
+        mSocket!!.emit("sos", rootObject)
     }
 
 }

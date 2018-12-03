@@ -36,6 +36,11 @@
     <string name="sos_title">¿Deseas pedir ayuda?</string>
     <string name="sos_btnhelp">Pedir ayuda</string>
 
+
+
+    <string name="guestdetaill_title">Invitado</string>
+    <string name="guestdetaill_sendinvitation">Enviar invitación</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="google_maps_key">AIzaSyDTeNiTc0Qu9CsQZBTapYCLVQqqPbO2pHI</string>

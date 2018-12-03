@@ -9,6 +9,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import mx.com.colonyadmin.colonyadmin.ForgotPassword.ChangePasswordFragment
+import mx.com.colonyadmin.colonyadmin.ForgotPassword.ForgotPasswordActivity
 import mx.com.colonyadmin.colonyadmin.LoginActivity.LoginActivity
 import mx.com.colonyadmin.colonyadmin.MainActivity.MainActivity
 import mx.com.colonyadmin.colonyadmin.R
@@ -34,6 +36,7 @@ class ProfileFragment : Fragment() {
     lateinit var btnChangePassword: Button
     lateinit var btnLogOut: Button
 
+
     private var listener: OnFragmentInteractionListener? = null
     public var TAG: String  = "Profile"
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,17 +54,23 @@ class ProfileFragment : Fragment() {
         var view = inflater.inflate(R.layout.fragment_profile, container, false) as View
         btnChangePassword = view.findViewById(R.id.profile_btnChangePassword) as Button
         btnLogOut = view.findViewById(R.id.profile_btnSignOut) as Button
+        val sharedPreferences = this.activity!!.getSharedPreferences("mx.com.colonyadmin.android", Context.MODE_PRIVATE)
+        btnChangePassword.setOnClickListener {
+            val email = sharedPreferences.getString("EmailSTRING", "")
 
-        btnChangePassword.setOnClickListener{
+            val intent = Intent(activity, ForgotPasswordActivity::class.java)
+            intent.putExtra("email", email)
+            startActivity(intent)
 
+            this.activity!!.finish()
         }
 
         btnLogOut.setOnClickListener{
-            val sharedPreferences = this.activity!!.getSharedPreferences("mx.com.colonyadmin.android", Context.MODE_PRIVATE)
-            sharedPreferences.edit().putString("EmailSTRING", "").apply()
 
+            sharedPreferences.edit().putString("EmailSTRING", "").apply()
             sharedPreferences.edit().putString("PasswordSTRING", "").apply()
             val intent = Intent(context, LoginActivity::class.java)
+
             startActivity(intent)
             this.activity!!.finish()
         }

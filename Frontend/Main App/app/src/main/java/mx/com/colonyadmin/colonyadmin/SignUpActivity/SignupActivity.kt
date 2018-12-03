@@ -67,12 +67,14 @@ class SignupActivity : AppCompatActivity() {
 
             //Validar los datos
             if(validateData()) {
+                val direccion :String= lstAddress[edtAddress.selectedItemPosition].id
                 val nuevoUsuario = newUser(
 
                         edtEmail.text.toString(),
                         edtPassword.text.toString(),
                         edtName.text.toString(),
-                        edtAddress.selectedItem.toString()+ " #${edtNumberAddres.text}",
+                        direccion,
+                        edtNumberAddres.text.toString(),
                         edtLastName.text.toString(),
                         edtPhone.text.toString(),
                         "1",

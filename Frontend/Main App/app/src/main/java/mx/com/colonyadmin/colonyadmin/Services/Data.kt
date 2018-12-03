@@ -12,6 +12,8 @@ data class Data(
         @SerializedName("last_name")
         val lastName: String,
         val address: String,
+        @SerializedName("address_number")
+        val addressNumber: String,
         val phone: String,
         val role: String,
         val vehicle: String

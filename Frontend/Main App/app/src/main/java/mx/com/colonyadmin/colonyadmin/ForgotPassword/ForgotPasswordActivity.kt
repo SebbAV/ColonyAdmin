@@ -21,9 +21,18 @@ class ForgotPasswordActivity : AppCompatActivity(), EmailForgotFragment.OnFragme
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_forgot_password)
-
-        addFragmentToActivity(EmailForgotFragment(),R.id.changePasswordFrame)
-
+        val b = intent.extras
+        // or other values
+        if (b == null)
+            addFragmentToActivity(EmailForgotFragment(),R.id.changePasswordFrame)
+        else {
+            val email:String  = b.getString("email")
+            val ecf: ChangePasswordFragment = ChangePasswordFragment()
+            val bundle = Bundle()
+            bundle.putString("email", email)
+            ecf.arguments = bundle
+            addFragmentToActivity(ecf, R.id.changePasswordFrame)
+        }
     }
 
     fun addFragmentToActivity(fragment: Fragment, frameId: Int) {

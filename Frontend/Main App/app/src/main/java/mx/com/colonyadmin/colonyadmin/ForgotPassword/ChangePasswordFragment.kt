@@ -70,7 +70,6 @@ class ChangePasswordFragment : Fragment() {
         if (bundle != null) {
             // handle your code here.
             email = bundle.getString("email")
-
         }
 
 

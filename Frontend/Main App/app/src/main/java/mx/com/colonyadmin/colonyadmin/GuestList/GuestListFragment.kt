@@ -15,10 +15,14 @@ import android.view.*
 import android.view.Window.FEATURE_NO_TITLE
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
+import android.app.AlertDialog
+import android.graphics.Color
 import android.view.ViewAnimationUtils
 import android.opengl.ETC1.getHeight
 import android.opengl.ETC1.getWidth
 import android.widget.*
+import kotlinx.android.synthetic.main.fragment_dialog_sos.*
+import kotlinx.android.synthetic.main.fragment_dialog_sos.view.*
 import mx.com.colonyadmin.colonyadmin.MainActivity.MainActivity
 import mx.com.colonyadmin.colonyadmin.Services.DataXXXXXX
 import mx.com.colonyadmin.colonyadmin.Services.GuestListResponse
@@ -29,6 +33,8 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.*
+import kotlin.concurrent.schedule
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -69,6 +75,24 @@ class GuestListFragment : Fragment() {
         //btnAddGuest.setOnClickListener()
         lstView = view.findViewById(R.id.lstViewGuests)
         btnfoa.setOnClickListener{
+            /*
+            Dialog simple
+            val mDialogView = LayoutInflater.from(this.activity).inflate(R.layout.fragment_dialog_sos, null)
+            //AlertDialogBuilder
+            val mBuilder = AlertDialog.Builder(this.activity)
+                    .setView(mDialogView)
+            //show dialog
+            val  mAlertDialog = mBuilder.show()
+
+
+            mDialogView.btnToolbarClose.setOnClickListener{
+                mAlertDialog.dismiss()
+            }
+
+            mDialogView.sos_btnHelp.setOnClickListener{
+                (activity as MainActivity).getHelp()
+            }*/
+            /*Dialog con animación*/
             showDiag()
         }
 
@@ -150,8 +174,20 @@ class GuestListFragment : Fragment() {
 
         dialog.setOnShowListener { revealShow(dialogView, true, null) }
 
-        dialog.window!!.setBackgroundDrawable(ColorDrawable(this.activity!!.resources.getColor( R.color.colorAccentGray)))
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
+        dialog.btnToolbarClose.setOnClickListener{
+            dialog.dismiss()
+        }
+        dialog.sos_btnHelp.setOnClickListener{
+            (activity as MainActivity).getHelp()
+
+            Toast.makeText(this@GuestListFragment.context, "Se ha enviado la petición de ayuda", Toast.LENGTH_LONG).show()
+            Timer("SettingUp", false).schedule(3000) {
+
+                dialog.dismiss()
+            }
+        }
         dialog.show()
     }
 
