@@ -22,7 +22,7 @@ io.sockets.on('connection', (socket) => {
     });
     socket.on('local_sos_request',(data)=>{
         opt.args = []
-        opt.args.push(data);
+        opt.args.push(JSON.stringify(data));
         PythonShell.run("sos.py", opt, (err, res) => {
             opt.args = []
             if (err) {
