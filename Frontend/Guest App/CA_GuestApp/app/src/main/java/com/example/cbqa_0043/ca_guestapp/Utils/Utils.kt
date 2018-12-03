@@ -9,8 +9,8 @@ import java.util.regex.Pattern
 
 class Utils {
 
-    val GuestList = "GuestList"
-    val ProfileFragment = "Profile"
+    val InvitationFragment = "Invitation"
+    val ARFragment = "AR"
     val MapFragment = "Map"
 
     companion object {
