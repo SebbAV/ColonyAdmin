@@ -13,6 +13,9 @@ interface LoginService {
     fun doLogin(@Body  body: UserRequest): Call<UserResponse>
     @POST("user")
     fun createUser(@Body body: newUser): Call<UserResponse>
+
+    @GET("user/get_last_invitation/{ID}")
+    fun getInvitation(@Path("ID")code: String): Call<InvitationResponseObject>
 }
 
 object RetrofitClient {
