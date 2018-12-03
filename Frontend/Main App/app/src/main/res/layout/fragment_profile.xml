@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ProfileFragment.ProfileFragment">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccentGray"
+        android:clickable="false"
+        android:gravity="center"
+        android:textAlignment="center"
+        android:titleTextColor="@color/colorPrimaryWhite"
+        app:popupTheme="@style/AppTheme.PopupOverlay"
+        app:title="@string/profile"></android.support.v7.widget.Toolbar>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="240dp"
+            android:layout_height="240dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="100dp"
+            android:id="@+id/imgUser"
+            />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imgUser"
+            android:text="Cambiar Contraseña"
+            android:id="@+id/profile_btnChangePassword"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/rounded_button"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/profile_btnChangePassword"
+            android:text="Cerrar Sesión"
+            android:drawableLeft="@drawable/ic_logout"
+            android:paddingRight="10dp"
+            android:background="@drawable/rounded_button"
+            android:paddingLeft="10dp"
+            android:id="@+id/profile_btnSignOut"/>
+    </RelativeLayout>
+
+</FrameLayout>
