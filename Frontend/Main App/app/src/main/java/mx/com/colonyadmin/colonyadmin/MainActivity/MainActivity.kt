@@ -1,13 +1,15 @@
 package mx.com.colonyadmin.colonyadmin.MainActivity
 
+import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AlertDialog
-import android.widget.Toast
+import android.widget.ProgressBar
 import com.github.nkzawa.socketio.client.IO
 import com.github.nkzawa.socketio.client.Socket
 import mx.com.colonyadmin.colonyadmin.GuestList.GuestListFragment
@@ -15,14 +17,21 @@ import mx.com.colonyadmin.colonyadmin.LoginActivity.LoginActivity
 import mx.com.colonyadmin.colonyadmin.MapFragment.MapFragment
 import mx.com.colonyadmin.colonyadmin.ProfileFragment.ProfileFragment
 import mx.com.colonyadmin.colonyadmin.R
+import mx.com.colonyadmin.colonyadmin.Services.*
 import mx.com.colonyadmin.colonyadmin.Utils.Utils
+import org.json.JSONObject
 import java.net.URISyntaxException
 
 class MainActivity : AppCompatActivity(), ProfileFragment.OnFragmentInteractionListener, GuestListFragment.OnFragmentInteractionListener, MapFragment.OnFragmentInteractionListener {
 
-    public lateinit var utils  : Utils
-
+    lateinit var utils  : Utils
+    private lateinit var progressDialog: ProgressDialog
+    lateinit var _idUser : String
+    lateinit var _addressUser:String
+    lateinit var _addressNumber:String
     private var mSocket: Socket? = intializeSocket()
+
+    private var lstGuests: MutableList<DataXXXXXX>? = null
     //Inicialization of socket io
         fun intializeSocket(): Socket?{
             try {
@@ -53,7 +62,25 @@ class MainActivity : AppCompatActivity(), ProfileFragment.OnFragmentInteractionL
                 startActivity(intent);
             }
         }
+        else{
+            mSocket!!.connect()
+        }
+        val b = intent.extras
+        // or other values
+        if (b != null) {
+            _idUser = b.getString("_id")
+            _addressUser = b.getString("_address")
+            _addressNumber = b.getString("address_number")
+        }
+        else{
+            val intent = Intent(this.baseContext, LoginActivity::class.java)
+            startActivity(intent)
+        }
         val bottomNavigation: BottomNavigationView = findViewById(R.id.navigationView)
+        //Inicializamos el dialog para cargar a los invitados
+        showLoading()
+
+
 
         bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         //Initialziation of the first fragment
@@ -93,4 +120,42 @@ class MainActivity : AppCompatActivity(), ProfileFragment.OnFragmentInteractionL
     override fun onFragmentInteraction(uri: Uri) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
+
+    public override fun onDestroy() {
+        super.onDestroy()
+
+        mSocket!!.disconnect()
+    }
+    fun showLoading() {
+        progressDialog = ProgressDialog.show(this, null, null)
+        progressDialog.setContentView(ProgressBar(this))
+        progressDialog.getWindow()!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+    }
+
+    fun hideLoading() {
+        try {
+            progressDialog.cancel()
+        } catch (ex: Exception) {
+
+        }
+
+    }
+
+    fun setListGuests(lst: MutableList<DataXXXXXX>){
+        lstGuests = lst
+    }
+
+    fun getListGuests() : MutableList<DataXXXXXX>?{
+        return lstGuests
+    }
+
+    //Socket IO functionality
+    fun getHelp(){
+
+        val rootObject= JSONObject()
+        rootObject.put("address",_addressUser)
+        rootObject.put("address_number",_addressNumber)
+        mSocket!!.emit("sos", rootObject)
+    }
+
 }
