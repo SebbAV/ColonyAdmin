@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".SosDialog.DialogSosFragment"
     android:id="@+id/dialogSos">
 
     <android.support.v7.widget.Toolbar
@@ -44,6 +43,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="30dp"
+        android:textColor="@color/colorPrimaryWhite"
         android:textAlignment="center"
         android:text="@string/sos_title"
         android:id="@+id/sos_textViewTitle"
@@ -51,40 +51,20 @@
         android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginBottom="20dp"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Descripción del problema"
-        android:id="@+id/sos_textViewDescription"
-        android:layout_below="@+id/sos_textViewTitle"
-        android:paddingLeft="20dp"/>
 
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-
-        android:inputType="textMultiLine"
-
-        android:id="@+id/sos_edtDescription"
-        android:layout_below="@+id/sos_textViewDescription"
-
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginBottom="20dp"
-        />
 
     <Button
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="70dp"
         android:text="@string/sos_btnhelp"
         android:background="@drawable/rounded_button_red"
-        android:layout_below="@+id/sos_edtDescription"
+        android:layout_below="@+id/sos_textViewTitle"
         android:textSize="30dp"
         android:layout_marginTop="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginBottom="20dp"
+        android:id="@+id/sos_btnHelp"
         />
 
 

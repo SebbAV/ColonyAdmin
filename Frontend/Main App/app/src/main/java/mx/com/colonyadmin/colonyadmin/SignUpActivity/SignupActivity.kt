@@ -67,23 +67,25 @@ class SignupActivity : AppCompatActivity() {
 
             //Validar los datos
             if(validateData()) {
-            val nuevoUsuario = newUser(
+                val direccion :String= lstAddress[edtAddress.selectedItemPosition].id
+                val nuevoUsuario = newUser(
 
-                    edtEmail.text.toString(),
-                    edtPassword.text.toString(),
-                    edtName.text.toString(),
-                    edtAddress.selectedItem.toString()+ " #${edtNumberAddres.text}",
-                    edtLastName.text.toString(),
-                    edtPhone.text.toString(),
-                    "1",
-                    edtPlates.text.toString()
-            )
-            snackbar = Snackbar.make(
-                    getWindow().getDecorView().getRootView(), // Parent view
-                    "Creando usuario...", // Message to show
-                    Snackbar.LENGTH_INDEFINITE // How long to display the message.
-            )
-            snackbar.show()
+                        edtEmail.text.toString(),
+                        edtPassword.text.toString(),
+                        edtName.text.toString(),
+                        direccion,
+                        edtNumberAddres.text.toString(),
+                        edtLastName.text.toString(),
+                        edtPhone.text.toString(),
+                        "1",
+                        edtPlates.text.toString()
+                )
+                snackbar = Snackbar.make(
+                        getWindow().getDecorView().getRootView(), // Parent view
+                        "Creando usuario...", // Message to show
+                        Snackbar.LENGTH_INDEFINITE // How long to display the message.
+                )
+                snackbar.show()
 
             //Enviar los datos
             sendData(nuevoUsuario)

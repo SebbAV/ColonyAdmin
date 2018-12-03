@@ -128,6 +128,8 @@ class LoginActivity : AppCompatActivity() {
                 if (response.isSuccessful()) {
                     val intent = Intent(context, MainActivity::class.java)
                     intent.putExtra("_id", response.body()!!.data.id)
+                    intent.putExtra("_address", response.body()!!.data.address)
+                    intent.putExtra("address_number", response.body()!!.data.addressNumber)
                     startActivity(intent)
                     Toast.makeText(context, "Bienvenido " + response.body()!!.data.firstName.toUpperCase(), Toast.LENGTH_SHORT).show()
 
