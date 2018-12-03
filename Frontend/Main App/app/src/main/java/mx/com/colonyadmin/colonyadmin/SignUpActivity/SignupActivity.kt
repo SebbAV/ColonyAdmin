@@ -67,33 +67,33 @@ class SignupActivity : AppCompatActivity() {
 
             //Validar los datos
             if(validateData()) {
-                val nuevoUsuario = newUser(
+            val nuevoUsuario = newUser(
 
-                        edtEmail.text.toString(),
-                        edtPassword.text.toString(),
-                        edtName.text.toString(),
-                        edtAddress.selectedItem.toString()+ " #${edtNumberAddres.text}",
-                        edtLastName.text.toString(),
-                        edtPhone.text.toString(),
-                        "1",
-                        edtPlates.text.toString()
-                )
-                snackbar = Snackbar.make(
-                        getWindow().getDecorView().getRootView(), // Parent view
-                        "Creando usuario...", // Message to show
-                        Snackbar.LENGTH_INDEFINITE // How long to display the message.
-                )
-                snackbar.show()
+                    edtEmail.text.toString(),
+                    edtPassword.text.toString(),
+                    edtName.text.toString(),
+                    edtAddress.selectedItem.toString()+ " #${edtNumberAddres.text}",
+                    edtLastName.text.toString(),
+                    edtPhone.text.toString(),
+                    "1",
+                    edtPlates.text.toString()
+            )
+            snackbar = Snackbar.make(
+                    getWindow().getDecorView().getRootView(), // Parent view
+                    "Creando usuario...", // Message to show
+                    Snackbar.LENGTH_INDEFINITE // How long to display the message.
+            )
+            snackbar.show()
 
-                //Enviar los datos
-                sendData(nuevoUsuario)
+            //Enviar los datos
+            sendData(nuevoUsuario)
 
 
 
-            }
-            else
-                Toast.makeText(baseContext, "Verifica los valores ingresados" , Toast.LENGTH_SHORT).show()
         }
+        else
+            Toast.makeText(baseContext, "Verifica los valores ingresados" , Toast.LENGTH_SHORT).show()
+    }
 
 
         getAdresses()

@@ -1,71 +1,44 @@
-package mx.com.colonyadmin.colonyadmin.LoginActivity
+package com.example.cbqa_0043.ca_guestapp.LoginActivity
 
 import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.Snackbar
-import android.util.Log
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
+import com.example.cbqa_0043.ca_guestapp.MainActivity
+import com.example.cbqa_0043.ca_guestapp.R
+import com.example.cbqa_0043.ca_guestapp.Services.LoginService
+import com.example.cbqa_0043.ca_guestapp.Services.UserRequest
+import com.example.cbqa_0043.ca_guestapp.Services.UserResponse
+import com.example.cbqa_0043.ca_guestapp.Signup
+import com.example.cbqa_0043.ca_guestapp.Utils.Utils
 import kotlinx.android.synthetic.main.activity_login.*
-import mx.com.colonyadmin.colonyadmin.ForgotPassword.ForgotPasswordActivity
-import mx.com.colonyadmin.colonyadmin.MainActivity.MainActivity
-import mx.com.colonyadmin.colonyadmin.R
-import mx.com.colonyadmin.colonyadmin.Services.LoginService
-import mx.com.colonyadmin.colonyadmin.Services.UserRequest
-import mx.com.colonyadmin.colonyadmin.Services.UserResponse
-import mx.com.colonyadmin.colonyadmin.SignUpActivity.SignupActivity
-import mx.com.colonyadmin.colonyadmin.Utils.Utils
+import java.net.SocketTimeoutException
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.net.SocketTimeoutException
-import java.util.HashMap
 
 class LoginActivity : AppCompatActivity() {
-    lateinit var btnLogin: Button
-    lateinit var edtEmail : EditText
-    lateinit var edtPassword : EditText
-    lateinit var txtForgotPassword : TextView
-    lateinit var txtRegister : TextView
-    var retrofit: Retrofit? = null
-    var utils:Utils? = null
-    val BaseURL = "http://akarokhome.ddns.net:3000/v1/"
-    lateinit var snackbar: Snackbar
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        btnLogin   = findViewById(R.id.login_btnLogin) as Button
-        edtEmail = findViewById(R.id.login_email) as EditText
-        txtForgotPassword = findViewById(R.id.login_forgotPassword) as TextView
-        edtPassword = findViewById(R.id.login_password) as EditText
-        txtRegister = findViewById(R.id.login_createAccount) as TextView
-
-        txtForgotPassword.setOnClickListener{
-            val intent = Intent(this.baseContext, ForgotPasswordActivity::class.java)
-            startActivity(intent);
-        }
-
-        txtRegister.setOnClickListener{
-            val intent = Intent(this.baseContext, SignupActivity::class.java)
+        btnRegister.setOnClickListener{
+            val intent = Intent(this, Signup::class.java)
             startActivity(intent);
         }
         btnLogin.setOnClickListener{
             //Validar entrada
 
 
-            var objLoginApiSolicitud : UserRequest? = UserRequest(edtEmail.text.toString(),edtPassword.text.toString())
+            var objLoginApiSolicitud : UserRequest? = UserRequest(etEmail.text.toString(),etPassword.text.toString())
             snackbar = Snackbar.make(
-                    rootLoginLayout, // Parent view
-                    "Autenticando...", // Message to show
-                    Snackbar.LENGTH_INDEFINITE // How long to display the message.
+                rootLoginLayout, // Parent view
+                "Autenticando...", // Message to show
+                Snackbar.LENGTH_INDEFINITE // How long to display the message.
             )
             snackbar.show()
             //validaciones de string
@@ -75,14 +48,16 @@ class LoginActivity : AppCompatActivity() {
 
         }
         utils = Utils()
-        //check shared preferences
     }
-
+    var retrofit: Retrofit? = null
+    var utils:Utils? = null
+    val BaseURL = "http://akarokhome.ddns.net:3000/v1/"
+    lateinit var snackbar: Snackbar
     fun login(user: UserRequest, context: Context){
 
         val retrofit = Retrofit.Builder().baseUrl(Utils.URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
 
 
 
@@ -101,7 +76,7 @@ class LoginActivity : AppCompatActivity() {
 
                 if (response.isSuccessful()) {
                     val intent = Intent(context, MainActivity::class.java)
-                    startActivity(intent);
+                    startActivity(intent)
                     Toast.makeText(context, "Bienvenido " + response.body()!!.data.firstName.toUpperCase(), Toast.LENGTH_SHORT).show()
 
                     //We save our  user object
@@ -131,9 +106,7 @@ class LoginActivity : AppCompatActivity() {
                 snackbar.dismiss()
             }
         })
-
-
-
-
     }
 }
+
+
