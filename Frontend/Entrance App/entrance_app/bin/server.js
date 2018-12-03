@@ -20,5 +20,18 @@ io.sockets.on('connection', (socket) => {
             }
         });
     });
+    socket.on('local_sos_request',(data)=>{
+        opt.args = []
+        opt.args.push(data);
+        PythonShell.run("sos.py", opt, (err, res) => {
+            opt.args = []
+            if (err) {
+                throw err;
+            }
+            else {
+                console.log(res[0])
+            }
+        });
+    })
 });
 module.exports = io;
