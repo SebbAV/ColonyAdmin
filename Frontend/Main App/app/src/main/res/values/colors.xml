@@ -5,5 +5,6 @@
     <color name="colorPrimaryWhite">#ffffff</color>
     <color name="colorAccentGray">#292929</color>
     <color name="colorAccentLightGray">#565656</color>
+    <color name="colorAccentMoreLightGray">#797979</color>
     <color name="colorAccentRed">#b62a25</color>
 </resources>

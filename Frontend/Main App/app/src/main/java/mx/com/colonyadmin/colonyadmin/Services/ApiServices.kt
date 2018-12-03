@@ -28,6 +28,9 @@ interface LoginService {
 
     @GET("address/")
     fun getAddress(): Call<AddressResponse>
+
+    @GET("user/get_visitors/{ID}")
+    fun getGuestsById(@Path("ID")id: String): Call<GuestListResponse>
 }
 
 
