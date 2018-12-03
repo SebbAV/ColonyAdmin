@@ -29,6 +29,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="100dp"
             android:id="@+id/imgUser"
+            android:src="@drawable/ic_password"
             />
 
         <Button
@@ -36,6 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/imgUser"
             android:text="Cambiar Contraseña"
+            android:drawableLeft="@drawable/ic_password"
             android:id="@+id/profile_btnChangePassword"
             android:layout_marginTop="30dp"
             android:background="@drawable/rounded_button"

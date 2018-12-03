@@ -1,16 +1,14 @@
-package mx.com.colonyadmin.colonyadmin.ProfileFragment
+package mx.com.colonyadmin.colonyadmin.SosDialog
 
 import android.content.Context
-import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.support.v4.app.DialogFragment
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import mx.com.colonyadmin.colonyadmin.LoginActivity.LoginActivity
-import mx.com.colonyadmin.colonyadmin.MainActivity.MainActivity
 import mx.com.colonyadmin.colonyadmin.R
 
 
@@ -22,48 +20,35 @@ private const val ARG_PARAM2 = "param2"
 /**
  * A simple [Fragment] subclass.
  * Activities that contain this fragment must implement the
- * [ProfileFragment.OnFragmentInteractionListener] interface
+ * [DialogSosFragment.OnFragmentInteractionListener] interface
  * to handle interaction events.
- * Use the [ProfileFragment.newInstance] factory method to
+ * Use the [DialogSosFragment.newInstance] factory method to
  * create an instance of this fragment.
  *
  */
-class ProfileFragment : Fragment() {
+class DialogSosFragment : DialogFragment() {
     // TODO: Rename and change types of parameters
-
-    lateinit var btnChangePassword: Button
-    lateinit var btnLogOut: Button
-
+    private var param1: String? = null
+    private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
-    public var TAG: String  = "Profile"
+    lateinit var bntClose: Button
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-
+            param1 = it.getString(ARG_PARAM1)
+            param2 = it.getString(ARG_PARAM2)
         }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-
         // Inflate the layout for this fragment
+        val view =inflater.inflate(R.layout.fragment_dialog_sos, container, false)
+        bntClose = view.findViewById(R.id.btnToolbarClose)
 
-        var view = inflater.inflate(R.layout.fragment_profile, container, false) as View
-        btnChangePassword = view.findViewById(R.id.profile_btnChangePassword) as Button
-        btnLogOut = view.findViewById(R.id.profile_btnSignOut) as Button
-
-        btnChangePassword.setOnClickListener{
-
-        }
-
-        btnLogOut.setOnClickListener{
-            val sharedPreferences = this.activity!!.getSharedPreferences("mx.com.colonyadmin.android", Context.MODE_PRIVATE)
-            sharedPreferences.edit().putString("EmailSTRING", "").apply()
-
-            sharedPreferences.edit().putString("PasswordSTRING", "").apply()
-            val intent = Intent(context, LoginActivity::class.java)
-            startActivity(intent)
-            this.activity!!.finish()
+        bntClose.setOnClickListener{
+            this.dismiss()
         }
         return view
     }
@@ -110,14 +95,15 @@ class ProfileFragment : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment ProfileFragment.
+         * @return A new instance of fragment DialogSosFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance() =
-                ProfileFragment().apply {
+        fun newInstance(param1: String, param2: String) =
+                DialogSosFragment().apply {
                     arguments = Bundle().apply {
-
+                        putString(ARG_PARAM1, param1)
+                        putString(ARG_PARAM2, param2)
                     }
                 }
     }

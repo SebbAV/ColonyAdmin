@@ -1,14 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DialogSosFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".SosDialog.DialogSosFragment"
+    android:id="@+id/dialogSos">
 
-    <!-- TODO: Update blank fragment layout -->
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbarSOS"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textAlignment="center"
+        android:background="@color/colorPrimary"
+        app:titleTextColor="@color/colorPrimaryWhite"
+        app:popupTheme="@style/AppTheme.PopupOverlay"
+        android:clickable="false"
+        >
+        <Button
+            android:layout_width="70dp"
+            android:layout_height="50dp"
+            android:background="@color/colorPrimary"
+            android:layout_gravity="left"
+            style="?android:attr/borderlessButtonStyle"
+            android:id="@+id/btnToolbarClose"
+            android:src="@drawable/ic_close"
+            android:text="Cerrar" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SOS"
+            android:layout_gravity="center"
+            style="@style/MyActionBarTitle"
+            android:id="@+id/toolbar_title"
+            android:clickable="false"
+            />
+
+    </android.support.v7.widget.Toolbar>
+
+    <TextView
+        android:layout_below="@+id/toolbarSOS"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="30dp"
+        android:textAlignment="center"
+        android:text="@string/sos_title"
+        android:id="@+id/sos_textViewTitle"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="20dp"/>
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:text="Descripción del problema"
+        android:id="@+id/sos_textViewDescription"
+        android:layout_below="@+id/sos_textViewTitle"
+        android:paddingLeft="20dp"/>
 
-</FrameLayout>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+
+        android:inputType="textMultiLine"
+
+        android:id="@+id/sos_edtDescription"
+        android:layout_below="@+id/sos_textViewDescription"
+
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="20dp"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/sos_btnhelp"
+        android:background="@drawable/rounded_button_red"
+        android:layout_below="@+id/sos_edtDescription"
+        android:textSize="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="20dp"
+        />
+
+
+</RelativeLayout>
