@@ -1,13 +1,27 @@
 package com.example.cbqa_0043.ca_guestapp.InvitationFragment
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
+import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import android.widget.Toast
+import com.example.cbqa_0043.ca_guestapp.MainActivity.MainActivity
 import com.example.cbqa_0043.ca_guestapp.R
+import com.example.cbqa_0043.ca_guestapp.Services.InvitationResponseObject
+import com.example.cbqa_0043.ca_guestapp.Services.LoginService
+import com.example.cbqa_0043.ca_guestapp.Utils.Utils
+import kotlinx.android.synthetic.main.fragment_invitation.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -27,24 +41,60 @@ private const val ARG_PARAM2 = "param2"
 class invitation : Fragment() {
     // TODO: Rename and change types of parameters
     private var listener: OnFragmentInteractionListener? = null
-
+    lateinit var txtCode: TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
         }
     }
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_invitation, container, false)
+        val view = inflater.inflate(R.layout.fragment_invitation, container, false) as View
+        txtCode = view.findViewById(R.id.txtCode) as TextView
+        val userid = (this.activity as MainActivity)._idUser
+        getInvitation(userid)
+        return view
     }
 
     // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
+    }
+
+    fun getInvitation(idUser: String) {
+        val retrofit = Retrofit.Builder().baseUrl(Utils.URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        //Variable declaration
+        var mAPIService: LoginService? = retrofit.create(LoginService::class.java)
+
+        //After oncreate
+
+        //Some Button click
+        var activity = this
+
+        mAPIService!!.getInvitation(idUser).enqueue(object : Callback<InvitationResponseObject> {
+            @SuppressLint("SetTextI18n")
+            override fun onResponse(
+                call: Call<InvitationResponseObject>,
+                response: Response<InvitationResponseObject>
+            ) {
+
+                if (response.isSuccessful()) {
+                    txtCode.text = "Code: ${response.body()!!.data.invitationCode}"
+                }
+            }
+
+            override fun onFailure(call: Call<InvitationResponseObject>, t: Throwable) {
+                getInvitation(idUser)
+            }
+        })
     }
 
     override fun onAttach(context: Context) {

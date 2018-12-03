@@ -76,6 +76,7 @@ class LoginActivity : AppCompatActivity() {
 
                 if (response.isSuccessful()) {
                     val intent = Intent(context, MainActivity::class.java)
+                    intent.putExtra("_id", response.body()!!.data.id)
                     startActivity(intent)
                     Toast.makeText(context, "Bienvenido " + response.body()!!.data.firstName.toUpperCase(), Toast.LENGTH_SHORT).show()
 
