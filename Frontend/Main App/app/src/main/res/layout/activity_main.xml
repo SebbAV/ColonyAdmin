@@ -17,14 +17,15 @@
         android:id="@+id/navigationView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginBottom="0dp"
         android:background="@color/colorAccentGray"
         android:elevation="10dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        app:menu="@menu/navigation"
         app:itemIconTint="@drawable/bottom_navigation_color"
         app:itemTextColor="@drawable/bottom_navigation_color"
-        app:tabBackground="@color/colorAccentGray"
-        />
+        app:menu="@menu/navigation"
+        app:tabBackground="@color/colorAccentGray" />
 
 </RelativeLayout>

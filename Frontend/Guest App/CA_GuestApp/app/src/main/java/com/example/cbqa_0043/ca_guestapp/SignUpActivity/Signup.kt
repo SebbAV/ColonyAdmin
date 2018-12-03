@@ -1,4 +1,4 @@
-package com.example.cbqa_0043.ca_guestapp
+package com.example.cbqa_0043.ca_guestapp.SignUpActivity
 
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.widget.Toast
 import com.example.cbqa_0043.ca_guestapp.LoginActivity.LoginActivity
+import com.example.cbqa_0043.ca_guestapp.R
 import com.example.cbqa_0043.ca_guestapp.Services.LoginService
 import com.example.cbqa_0043.ca_guestapp.Services.UserResponse
 import com.example.cbqa_0043.ca_guestapp.Services.newUser

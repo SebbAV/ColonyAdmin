@@ -6,12 +6,12 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.widget.Toast
-import com.example.cbqa_0043.ca_guestapp.MainActivity
+import com.example.cbqa_0043.ca_guestapp.MainActivity.MainActivity
 import com.example.cbqa_0043.ca_guestapp.R
 import com.example.cbqa_0043.ca_guestapp.Services.LoginService
 import com.example.cbqa_0043.ca_guestapp.Services.UserRequest
 import com.example.cbqa_0043.ca_guestapp.Services.UserResponse
-import com.example.cbqa_0043.ca_guestapp.Signup
+import com.example.cbqa_0043.ca_guestapp.SignUpActivity.Signup
 import com.example.cbqa_0043.ca_guestapp.Utils.Utils
 import kotlinx.android.synthetic.main.activity_login.*
 import java.net.SocketTimeoutException
