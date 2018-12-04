@@ -1,6 +1,7 @@
 package com.example.cbqa_0043.ca_guestapp.ARFragment
 
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -8,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.cbqa_0043.ca_guestapp.R
+import com.kevin.geomap.UnityPlayerActivity
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -43,7 +45,10 @@ class ARFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_ar, container, false)
+        val view = inflater.inflate(R.layout.fragment_ar, container, false)
+        val intent = Intent(this.activity, UnityPlayerActivity::class.java)
+        startActivity(intent)
+        return view
     }
 
     // TODO: Rename method, update argument and hook method into UI event
