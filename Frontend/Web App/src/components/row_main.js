@@ -5,6 +5,7 @@ import VisitorsTable from './visitors_table'
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form'
 import { getUserGroupedByAddress, getUsersByRole } from '../actions/index';
+import SosTable from './sos_table'
 import _ from 'lodash'
 
 const data = {
@@ -124,29 +125,30 @@ class RowMain extends Component {
         return <EmployeesTable />
     }
     sosMenu() {
-        return (
-            <div>
-                <Panel>
-                    <Panel.Body>
-                        <Row>
-                            <Col xs={8} md={10}>
-                                <h3 id="lblName">
-                                    {this.props.Name ? this.props.Name : 'Name'}
-                                </h3>
-                                <label id="lblAddress">
-                                    {this.props.Address ? this.props.Name : 'Address'}
-                                </label>
-                            </Col>
-                            <Col xs={8} md={10}>
-                                <label id="lblDescription">
-                                    {this.props.Code ? this.props.Name : 'Description'}
-                                </label>
-                            </Col>
-                        </Row>
-                    </Panel.Body>
-                </Panel>
-            </div>
-        )
+       return <SosTable/>
+        // return (
+        //     <div>
+        //         <Panel>
+        //             <Panel.Body>
+        //                 <Row>
+        //                     <Col xs={8} md={10}>
+        //                         <h3 id="lblName">
+        //                             {this.props.Name ? this.props.Name : 'Name'}
+        //                         </h3>
+        //                         <label id="lblAddress">
+        //                             {this.props.Address ? this.props.Name : 'Address'}
+        //                         </label>
+        //                     </Col>
+        //                     <Col xs={8} md={10}>
+        //                         <label id="lblDescription">
+        //                             {this.props.Code ? this.props.Name : 'Description'}
+        //                         </label>
+        //                     </Col>
+        //                 </Row>
+        //             </Panel.Body>
+        //         </Panel>
+        //     </div>
+        // )
     }
     defaultMenu() {
         return (

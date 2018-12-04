@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const IP = 'akarokhome.ddns.net'
-const API_URL = `http://${IP}:3000`
+export const API_URL = `http://${IP}:3000`
 
 export const USER_LOGIN = 'user_login';
 export const USER_REGISTER = 'user_register';

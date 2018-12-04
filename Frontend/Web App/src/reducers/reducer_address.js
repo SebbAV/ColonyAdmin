@@ -6,7 +6,7 @@ export default function (state = {}, action) {
         case GET_ADDRESS:
             return { ...state, 'addresses': action.payload.data }
         case GET_VISITORS:
-        return { ...state, 'visitors': action.payload.data }
+            return { ...state, 'visitors': action.payload.data }
         default:
             return state;
     }
