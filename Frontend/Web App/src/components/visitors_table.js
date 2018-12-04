@@ -1,12 +1,15 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import { Panel, Row, Col, Modal, Button } from 'react-bootstrap'
 import EmployeesTable from './employee_table'
-import {loadVisitors} from '../actions/index'
+import { loadVisitors } from '../actions/index'
 import { connect } from 'react-redux';
 
 class VisitorsTable extends Component {
     componentDidMount() {
         this.props.loadVisitors()
+    }
+    handleClick(key,event){
+        console.log(key)
     }
     loadUsers() {
         console.log(this.props.visitors.visitors)
@@ -16,12 +19,12 @@ class VisitorsTable extends Component {
                 if (!user) {
                     return (<h3>No users found </h3>)
                 }
-                if (!user.exit_date){
+                if (!user.exit_date) {
 
                 }
                 else {
                     return (
-                        <div key={user._id} >
+                        <div key={user.vehicle} onClick={this.handleClick.bind(this,user.vehicle)} >
                             <Row>
                                 {console.log(user)}
                                 <Col xs={9} md={10}>
@@ -36,7 +39,7 @@ class VisitorsTable extends Component {
                                 </Col>
                                 <Col xs={9} md={10}>
                                     <label id="lblAddress">
-                                         {user.address} 
+                                        {user.vehicle}
                                     </label>
                                 </Col>
                             </Row>
@@ -52,10 +55,10 @@ class VisitorsTable extends Component {
     }
     render() {
         console.log("First table render")
-        
+
         return (
             <div>
-             {this.loadUsers()}
+                {this.loadUsers()}
             </div>
         )
     }
@@ -66,4 +69,4 @@ function mapStateToProps(state) {
         visitors: state.visitors
     };
 }
-export default connect(mapStateToProps, {loadVisitors})(VisitorsTable)
+export default connect(mapStateToProps, { loadVisitors })(VisitorsTable)
