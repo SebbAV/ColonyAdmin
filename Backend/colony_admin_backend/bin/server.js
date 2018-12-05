@@ -13,8 +13,13 @@ io.sockets.on('connection', (socket) => {
         io.sockets.emit('allow_entrance_check', data);
     });
     socket.on('visitor', (data) => {
-        console.log(data);
-        visitors.push(data);
+        var check = false
+        visitors.forEach(element => {
+            if (element.userId == data.userId)
+                check = true
+        });
+        if (!check)
+            visitors.push(data);
     });
     socket.on('visitor_location', (data) => {
         console.log(data);
