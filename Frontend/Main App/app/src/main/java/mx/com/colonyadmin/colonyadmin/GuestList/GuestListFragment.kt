@@ -302,6 +302,7 @@ class GuestListFragment : Fragment() {
                 if (response.isSuccessful()) {
                     if (response.body()!!.data.isEmpty()){
                         Toast.makeText(activity.baseContext, "No tienes invitados registrados", Toast.LENGTH_LONG).show()
+                        (activity as MainActivity).hideLoading()
                     }
                     else{
                         lstView.visibility = View.VISIBLE
