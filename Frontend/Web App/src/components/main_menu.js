@@ -125,7 +125,6 @@ class MainMenu extends Component {
                         {/* <form className="form-page" onSubmit={handleSubmit(this.onSubmit.bind(this))}> */}
                         {this.state.type == "Neighbors" &&
                             <div>
-
                                 <Formik initialValues={{ first_name: '', last_name: '', vehicle: '', address: '', address_number: '' }}
                                     onSubmit={(values, { setSubmitting }) => {
                                         setTimeout(() => {
@@ -134,23 +133,34 @@ class MainMenu extends Component {
                                             this.props.registerUser(values)
                                         }, 400);
                                     }}>
-
                                     {({
-                                        values,
-                                        handleChange,
-                                        handleBlur,
-                                        handleSubmit,
                                         isSubmitting,
                                     }) => (
                                             <Form>
-                                                <FormikField name="email" />
-                                                <FormikField name="first_name" />
-                                                <FormikField name="last_name" />
-                                                <FormikField name="phone" />
-                                                <FormikField name="password" />
-                                                <button type="submit" disabled={isSubmitting}>
+                                                <label htmlFor="email" style={{ display: 'block' }}>
+                                                    Email
+                                                </label>
+                                                <FormikField name="email" className="text-input" />
+
+                                                <label htmlFor="first_name" style={{ display: 'block' }}>
+                                                    First Name
+                                                </label>
+                                                <FormikField name="first_name" className="text-input" />
+                                                <label htmlFor="last_name" style={{ display: 'block' }}>
+                                                    Last Name
+                                                </label>
+                                                <FormikField name="last_name" className="text-input" />
+                                                <label htmlFor="phone" style={{ display: 'block' }}>
+                                                    Phone
+                                                </label>
+                                                <FormikField name="phone" className="text-input" />
+                                                <label htmlFor="password" style={{ display: 'block' }}>
+                                                    Password
+                                                </label>
+                                                <FormikField name="password" className="text-input" />
+                                                <button type="submit" disabled={isSubmitting} style={{ display: 'block' }} className="text-input">
                                                     Submit
-                                           </button>
+                                                </button>
                                             </Form>
                                         )}
                                 </Formik>
@@ -174,14 +184,30 @@ class MainMenu extends Component {
                                         isSubmitting,
                                     }) => (
                                             <Form>
-                                                <FormikField name="email" />
-                                                <FormikField name="first_name" />
-                                                <FormikField name="last_name" />
-                                                <FormikField name="phone" />
-                                                <FormikField name="password" />
-                                                <button type="submit" disabled={isSubmitting}>
+                                                <label htmlFor="email" style={{ display: 'block' }}>
+                                                    Email
+                                    </label>
+                                                <FormikField name="email" className="text-input" />
+
+                                                <label htmlFor="first_name" style={{ display: 'block' }}>
+                                                    First Name
+                                    </label>
+                                                <FormikField name="first_name" className="text-input" />
+                                                <label htmlFor="last_name" style={{ display: 'block' }}>
+                                                    Last Name
+                                    </label>
+                                                <FormikField name="last_name" className="text-input" />
+                                                <label htmlFor="phone" style={{ display: 'block' }}>
+                                                    Phone
+                                    </label>
+                                                <FormikField name="phone" className="text-input" />
+                                                <label htmlFor="password" style={{ display: 'block' }}>
+                                                    Password
+                                    </label>
+                                                <FormikField name="password" className="text-input" />
+                                                <button type="submit" disabled={isSubmitting} style={{ display: 'block' }} className="text-input">
                                                     Submit
-                                                 </button>
+                                    </button>
                                             </Form>
                                         )}
                                 </Formik>
@@ -206,14 +232,29 @@ class MainMenu extends Component {
                                         isSubmitting,
                                     }) => (
                                             <Form>
-                                                <FormikField name="first_name" />
-                                                <FormikField name="last_name" />
-                                                <FormikField name="vehicle" />
-                                                <FormikField component="select" name="address" >
+                                                <label htmlFor="first_name" style={{ display: 'block' }}>
+                                                    First Name
+                                                </label>
+                                                <FormikField name="first_name" className="text-input" />
+                                                <label htmlFor="last_name" style={{ display: 'block' }}>
+                                                    Last Name
+                                                </label>
+                                                <FormikField name="last_name" className="text-input" />
+                                                <label htmlFor="vehicle" style={{ display: 'block' }}>
+                                                    Vehicle
+                                                </label>
+                                                <FormikField name="vehicle" className="text-input" />
+                                                <label htmlFor="address" style={{ display: 'block' }}>
+                                                    Address
+                                                </label>
+                                                <FormikField component="select" name="address" className="text-input" >
                                                     {this.loadOptions()}
                                                 </FormikField>
-                                                <FormikField name="address_number" />
-                                                <button type="submit" disabled={isSubmitting}>
+                                                <label htmlFor="address_number" style={{ display: 'block' }}>
+                                                    Address Number
+                                                </label>
+                                                <FormikField name="address_number" className="text-input" />
+                                                <button type="submit" disabled={isSubmitting} className="text-input" >
                                                     Submit
                                                      </button>
                                             </Form>
