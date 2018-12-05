@@ -32,7 +32,6 @@ class Utils {
             val transaction = fragmentManager.beginTransaction()
             transaction.replace(frameId, fragment, tag)
             //Only if is not my main fragment i will add it to tha back stack
-
             if (tag != "GuestList")
                 transaction.addToBackStack(tag)
             transaction.commit()

@@ -31,6 +31,12 @@ interface LoginService {
 
     @GET("user/get_visitors/{ID}")
     fun getGuestsById(@Path("ID")id: String): Call<GuestListResponse>
+
+    @GET("user/get_by_role/2")
+    fun getAllGuests(): Call<AllUsersResponse>
+
+    @POST("visit/assign_code/")
+    fun sendGuestInvitation(@Body body: InvitationGuestRequest): Call<InvitationGuestResponse>
 }
 
 

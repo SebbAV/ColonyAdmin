@@ -69,13 +69,12 @@ class SignupActivity : AppCompatActivity() {
             if(validateData()) {
                 val direccion :String= lstAddress[edtAddress.selectedItemPosition].id
                 val nuevoUsuario = newUser(
-
                         edtEmail.text.toString(),
                         edtPassword.text.toString(),
                         edtName.text.toString(),
+                        edtLastName.text.toString(),
                         direccion,
                         edtNumberAddres.text.toString(),
-                        edtLastName.text.toString(),
                         edtPhone.text.toString(),
                         "1",
                         edtPlates.text.toString()
@@ -240,6 +239,7 @@ class SignupActivity : AppCompatActivity() {
                     Toast.makeText(activity, "Usuario creado", Toast.LENGTH_LONG).show()
                     //We save our  user object
 
+
                     snackbar.dismiss()
 
                 }
@@ -247,7 +247,7 @@ class SignupActivity : AppCompatActivity() {
                     if(response.message()== "Not found")
                         Toast.makeText(activity, "Error: no se encontro el usuario" , Toast.LENGTH_SHORT).show()
                     if(response.code() == 409){
-                        Toast.makeText(activity, "Error: El usuario ya existe con el correo"+edtEmail.text.toString() , Toast.LENGTH_SHORT).show()
+                        Toast.makeText(activity, "Error: El usuario ya existe con el correo "+edtEmail.text.toString() , Toast.LENGTH_SHORT).show()
                         val intent = Intent(activity.baseContext, LoginActivity::class.java)
                         startActivity(intent)
                     }
@@ -255,6 +255,11 @@ class SignupActivity : AppCompatActivity() {
                     snackbar.dismiss()
 
                 }
+
+                val sharedPreferences = activity.getSharedPreferences("mx.com.colonyadmin.android", Context.MODE_PRIVATE)
+                sharedPreferences.edit().putString("EmailSTRING", "").apply()
+
+                sharedPreferences.edit().putString("PasswordSTRING", "").apply()
             }
 
             override fun onFailure(call: Call<UserResponse>, t: Throwable) {
@@ -264,6 +269,11 @@ class SignupActivity : AppCompatActivity() {
                 else{
                     Toast.makeText(activity, t.message, Toast.LENGTH_LONG).show()
                 }
+                snackbar.dismiss()
+                val sharedPreferences = activity.getSharedPreferences("mx.com.colonyadmin.android", Context.MODE_PRIVATE)
+                sharedPreferences.edit().putString("EmailSTRING", "").apply()
+
+                sharedPreferences.edit().putString("PasswordSTRING", "").apply()
 
             }
         })

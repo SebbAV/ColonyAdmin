@@ -60,8 +60,8 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="ic_close" />
-                            <entry key="sourceFile" value="D:\Users\Manolo\Documents\Semestre 7\ProyectoIntegrador-ColonyAdmin\Frontend\Resources\close.svg" />
+                            <entry key="outputName" value="ic_left_arrow" />
+                            <entry key="sourceFile" value="D:\Users\Manolo\Documents\Semestre 7\ProyectoIntegrador-ColonyAdmin\Frontend\Resources\left-arrow.svg" />
                           </map>
                         </option>
                       </PersistentState>

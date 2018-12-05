@@ -36,7 +36,8 @@
     <string name="sos_title">¿Deseas pedir ayuda?</string>
     <string name="sos_btnhelp">Pedir ayuda</string>
 
-
+    <string name="invitation_title_invitation">¿Deseas enviarle una invitación?</string>
+    <string name="invitation_btnPedirAyuda">Mandar invitación</string>
 
     <string name="guestdetaill_title">Invitado</string>
     <string name="guestdetaill_sendinvitation">Enviar invitación</string>

@@ -56,7 +56,7 @@ class LoginActivity : AppCompatActivity() {
         txtRegister = findViewById(R.id.login_createAccount) as TextView
 
 
-        val prefs = this.getSharedPreferences("mx.com.colonyadmin.android", MODE_PRIVATE)
+        /*val prefs = this.getSharedPreferences("mx.com.colonyadmin.android", MODE_PRIVATE)
 
         val email =  prefs.getString("EmailSTRING", "")
         val password = prefs.getString("PasswordSTRING","")
@@ -69,7 +69,7 @@ class LoginActivity : AppCompatActivity() {
                     Snackbar.LENGTH_INDEFINITE // How long to display the message.
             )
             snackbar.show()
-        }
+        }*/
         txtForgotPassword.setOnClickListener{
             val intent = Intent(this.baseContext, ForgotPasswordActivity::class.java)
             startActivity(intent)
@@ -134,6 +134,7 @@ class LoginActivity : AppCompatActivity() {
                     intent.putExtra("_id", response.body()!!.data.id)
                     intent.putExtra("_address", response.body()!!.data.address)
                     intent.putExtra("address_number", response.body()!!.data.addressNumber)
+                    intent.putExtra("email", response.body()!!.data.email)
                     startActivity(intent)
                     Toast.makeText(context, "Bienvenido " + response.body()!!.data.firstName.toUpperCase(), Toast.LENGTH_SHORT).show()
 

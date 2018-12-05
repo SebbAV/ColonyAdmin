@@ -4,7 +4,13 @@
     android:layout_height="fill_parent"
     android:orientation="vertical"
     android:padding="20dp" >
-
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -252,5 +258,7 @@
             android:text="@string/already_user"
             android:textColor="@color/colorPrimaryWhite"
             android:textSize="15sp" />
+    </LinearLayout>
+</ScrollView>
 
 </LinearLayout>
