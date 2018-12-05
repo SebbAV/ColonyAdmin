@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Panel, Row, Col, Modal, Button } from 'react-bootstrap'
 import EmployeesTable from './employee_table'
-import { loadVisitors } from '../actions/index'
+import { loadVisitors,exitVisitors } from '../actions/index'
 import { connect } from 'react-redux';
 
 class VisitorsTable extends Component {
@@ -10,6 +10,9 @@ class VisitorsTable extends Component {
     }
     handleClick(key,event){
         console.log(key)
+        let obj = {'vehicle':key}
+        {window.confirm("Do you want close the active session?") && this.props.exitVisitors(obj)}
+        
     }
     loadUsers() {
         console.log(this.props.visitors.visitors)
@@ -19,7 +22,7 @@ class VisitorsTable extends Component {
                 if (!user) {
                     return (<h3>No users found </h3>)
                 }
-                if (!user.exit_date) {
+                else if (user.exit_date) {
 
                 }
                 else {
@@ -69,4 +72,4 @@ function mapStateToProps(state) {
         visitors: state.visitors
     };
 }
-export default connect(mapStateToProps, { loadVisitors })(VisitorsTable)
+export default connect(mapStateToProps, { loadVisitors,exitVisitors })(VisitorsTable)

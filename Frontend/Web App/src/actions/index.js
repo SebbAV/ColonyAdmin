@@ -59,8 +59,16 @@ export function addUserAddress(values, callback) {
 }
 export function createVisit(values, callback) {
     values["address_number"] = parseInt(values["address_number"]);
-    console.log(values)
     return (axios.post(`${API_URL}/v1/visit/no_user/`, values).then((response) => {
+        callback()
+        return {
+            type: ADD_VISIT,
+            payload: response
+        }                                                                                                                                                                                                                                                                                                                                                                                                       
+    }))
+}
+export function createVisitCode(values, callback) {
+    return (axios.post(`${API_URL}/v1/visit/user/`, values).then((response) => {
         callback()
         return {
             type: ADD_VISIT,
@@ -75,6 +83,17 @@ export function loadVisitors(){
         type: GET_VISITORS,
         payload: request
     }
+}
+export function exitVisitors(values,callback){
+
+    return ( axios.post(`${API_URL}/v1/visit/exit`,values).then(() => {
+        callback()
+        return {
+            type: GET_VISITORS,
+            payload: request
+        }
+    }))
+
 }
 export function loadAddress(values){
 

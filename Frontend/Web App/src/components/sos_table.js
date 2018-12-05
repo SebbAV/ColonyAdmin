@@ -8,7 +8,7 @@ class SosTable extends Component {
     constructor() {
         super();
         this.state = {
-            response: []
+            response: [{ seh: "seh" }]
         }
     }
     componentDidMount() {
@@ -17,24 +17,33 @@ class SosTable extends Component {
 
     }
 
-    closeSocketSession(address){
-        console.log(address)
-        socket.emit("sos_finish",address)
+    closeSocketSession(sos) {
+
+        if (window.confirm("Do you want close the SOS call?")) {
+            socket.emit("sos_finish", sos.address);
+            this.state.response.splice(this.state.response.indexOf(sos), 1)
+            this.setState({ response: this.state.response })
+
+        }
+
     }
     createSOSPanel() {
         return _.map(this.state.response, sos => {
             return (
-                <div key={sos.address} onClick={this.closeSocketSession.bind(this,sos.address)}>
+                <div key={sos.address} onClick={this.closeSocketSession.bind(this, sos)}>
                     <Panel bsClass="panel-color">
                         <Panel.Body>
                             <Row>
                                 <Col xs={8} md={10}>
                                     <h3 id="lblName">
-                                        {sos.address ? sos.address: 'Address'}
+                                        {sos.address ? sos.address : 'Address'}
                                     </h3>
-                                    <label id="lblAddress">
-                                        {sos.address_number? sos.address_number : 'Address Number'}
-                                    </label>
+                                    <h4 id="lblAddress">
+                                        {sos.address_number ? sos.address_number : 'Address Number'}
+                                    </h4>
+                                    <h4 id="lblAddress">
+                                        {sos.email ? sos.email : 'Email'}
+                                    </h4>
                                 </Col>
                             </Row>
                         </Panel.Body>
