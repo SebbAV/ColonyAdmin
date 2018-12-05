@@ -7,10 +7,13 @@ import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Debug
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v7.app.AlertDialog
 import android.widget.ProgressBar
+import android.widget.Toast
+import com.github.nkzawa.emitter.Emitter
 import com.github.nkzawa.socketio.client.IO
 import com.github.nkzawa.socketio.client.Socket
 import mx.com.colonyadmin.colonyadmin.GuestList.GuestListFragment
@@ -21,8 +24,13 @@ import mx.com.colonyadmin.colonyadmin.ProfileFragment.ProfileFragment
 import mx.com.colonyadmin.colonyadmin.R
 import mx.com.colonyadmin.colonyadmin.Services.*
 import mx.com.colonyadmin.colonyadmin.Utils.Utils
+import org.json.JSONArray
 import org.json.JSONObject
 import java.net.URISyntaxException
+
+
+
+
 
 class MainActivity : AppCompatActivity(), ProfileFragment.OnFragmentInteractionListener, GuestListFragment.OnFragmentInteractionListener, MapFragment.OnFragmentInteractionListener, NewGuestFragment.OnFragmentInteractionListener {
 
@@ -35,7 +43,7 @@ class MainActivity : AppCompatActivity(), ProfileFragment.OnFragmentInteractionL
     private var mSocket: Socket? = intializeSocket()
 
     private var lstGuests: MutableList<DataXXXXXX>? = null
-     var lstAddress: MutableList<DataXXXXX>? = null
+    var lstAddress: MutableList<DataXXXXX>? = null
     //Inicialization of socket io
     fun intializeSocket(): Socket? {
         try {
@@ -56,7 +64,7 @@ class MainActivity : AppCompatActivity(), ProfileFragment.OnFragmentInteractionL
             builder.setTitle("Error al conectar el socket")
 
             // Display a message on alert dialog
-            builder.setMessage("Hubo un error con la conexión del socket, si persisten las molestias dirijase a la pagina www.pornhub.com, gracias :)")
+            builder.setMessage("Hubo un error con la co7nexión del socket, si persisten las molestias dirijase a la pagina www.pornhub.com, gracias :)")
 
             // Set a positive button and its click listener on alert dialog
             builder.setPositiveButton("Aceptar") { dialog, which ->
@@ -170,6 +178,8 @@ class MainActivity : AppCompatActivity(), ProfileFragment.OnFragmentInteractionL
 
         mSocket!!.emit("sos", rootObject)
     }
+
+
 
     fun addFragmentToActivity(fragment: Fragment, frameId: Int) {
 
