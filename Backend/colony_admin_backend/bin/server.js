@@ -5,6 +5,9 @@ io.sockets.on('connection', (socket) => {
     socket.on('sos', (data) => {
         io.sockets.emit('sos_request', data);
     });
+    socket.on('sos_finish', (data) => {
+        io.sockets.emit('sos_finished', data);
+    });
     socket.on('allow_entrance', (data) => {
         io.sockets.emit('allow_entrance_check', data);
     });

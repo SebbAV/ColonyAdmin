@@ -20,9 +20,9 @@ io.sockets.on('connection', (socket) => {
             }
         });
     });
-    socket.on('local_sos_request',(data)=>{
+    socket.on('local_sos_request', (data) => {
         opt.args = []
-        opt.args.push(JSON.stringify(data));
+        opt.args.push(true);
         PythonShell.run("sos.py", opt, (err, res) => {
             opt.args = []
             if (err) {
@@ -32,6 +32,19 @@ io.sockets.on('connection', (socket) => {
                 console.log(res[0])
             }
         });
-    })
+    });
+    socket.on('local_sos_finished', (data) => {
+        opt.args = []
+        opt.args.push(false);
+        PythonShell.run("sos.py", opt, (err, res) => {
+            opt.args = []
+            if (err) {
+                throw err;
+            }
+            else {
+                console.log(res[0])
+            }
+        });
+    });
 });
 module.exports = io;
