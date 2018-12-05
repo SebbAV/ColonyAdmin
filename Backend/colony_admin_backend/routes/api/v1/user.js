@@ -163,10 +163,8 @@ router.put('/', function (req, res) {
     if (!credentials.email ||
         !credentials.first_name ||
         !credentials.last_name ||
-        !credentials.address ||
         !credentials.phone ||
         !credentials.role ||
-        !credentials.vehicle ||
         !credentials._id) {
         responseHelper.respond(res, 400, 'Bad request. The request was missing some parameters.');
         return;
