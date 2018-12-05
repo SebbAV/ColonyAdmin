@@ -151,11 +151,9 @@ class MainActivity : AppCompatActivity(), ProfileFragment.OnFragmentInteractionL
 
     //Socket IO functionality
     fun getHelp(){
-
         val rootObject= JSONObject()
         rootObject.put("address",_addressUser)
         rootObject.put("address_number",_addressNumber)
         mSocket!!.emit("sos", rootObject)
     }
-
 }
