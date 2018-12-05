@@ -3,7 +3,7 @@ import { Panel, Button, Col, Row, Modal, Navbar, Nav, NavItem } from 'react-boot
 import { Field, reduxForm } from 'redux-form'
 import { Formik, Form, Field as FormikField, ErrorMessage } from 'formik'
 import { bindActionCreators } from 'redux'
-import { registerUser, addUserAddress, getUsersByRole, createVisit, loadAddress } from '../actions/index';
+import { registerUser, addUserAddress, getUsersByRole, createVisit, loadAddress,createVisitCode } from '../actions/index';
 
 import { connect } from 'react-redux';
 import RowMenu from './row_main'
@@ -118,54 +118,12 @@ class MainMenu extends Component {
                 {this.loadNavBar()}
                 <Modal show={this.state.show} onHide={this.handleClose}>
                     <Modal.Header closeButton>
-                        <Modal.Title>Modal heading</Modal.Title>
+                        <Modal.Title>{this.state.type}</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         {/* TODO: Move modal form to a separate class */}
                         {/* <form className="form-page" onSubmit={handleSubmit(this.onSubmit.bind(this))}> */}
-                        {this.state.type == "Neighbors" &&
-                            <div>
-                                <Formik initialValues={{ first_name: '', last_name: '', vehicle: '', address: '', address_number: '' }}
-                                    onSubmit={(values, { setSubmitting }) => {
-                                        setTimeout(() => {
-                                            alert(JSON.stringify(values, null, 2));
-                                            setSubmitting(false);
-                                            this.props.registerUser(values)
-                                        }, 400);
-                                    }}>
-                                    {({
-                                        isSubmitting,
-                                    }) => (
-                                            <Form>
-                                                <label htmlFor="email" style={{ display: 'block' }}>
-                                                    Email
-                                                </label>
-                                                <FormikField name="email" className="text-input" />
-
-                                                <label htmlFor="first_name" style={{ display: 'block' }}>
-                                                    First Name
-                                                </label>
-                                                <FormikField name="first_name" className="text-input" />
-                                                <label htmlFor="last_name" style={{ display: 'block' }}>
-                                                    Last Name
-                                                </label>
-                                                <FormikField name="last_name" className="text-input" />
-                                                <label htmlFor="phone" style={{ display: 'block' }}>
-                                                    Phone
-                                                </label>
-                                                <FormikField name="phone" className="text-input" />
-                                                <label htmlFor="password" style={{ display: 'block' }}>
-                                                    Password
-                                                </label>
-                                                <FormikField name="password" className="text-input" />
-                                                <button type="submit" disabled={isSubmitting} style={{ display: 'block' }} className="text-input">
-                                                    Submit
-                                                </button>
-                                            </Form>
-                                        )}
-                                </Formik>
-                            </div> ||
-                            this.state.type == "Employees" &&
+                        {this.state.type == "Employees" &&
                             <div>
                                 <Formik initialValues={{ first_name: '', last_name: '', vehicle: '', address: '', address_number: '' }}
                                     onSubmit={(values, { setSubmitting }) => {
@@ -220,7 +178,16 @@ class MainMenu extends Component {
                                         setTimeout(() => {
                                             alert(JSON.stringify(values, null, 2));
                                             setSubmitting(false);
-                                            this.props.createVisit(values)
+                                            if (values.code) {
+                                                this.props.createVisitCode(values).then(() => {
+                                                    this.handleClose();
+                                                })
+                                            }
+                                            else {
+                                                this.props.createVisit(values).then(() => {
+                                                    this.handleClose();
+                                                })
+                                            }
                                         }, 400);
                                     }}>
 
@@ -232,6 +199,13 @@ class MainMenu extends Component {
                                         isSubmitting,
                                     }) => (
                                             <Form>
+                                                Option 1
+                                                <label htmlFor="code" style={{ display: 'block' }}>
+                                                    Invitation Code
+                                                </label>
+                                                <FormikField name="code" className="text-input" />
+                                                <hr />
+                                                Option 2
                                                 <label htmlFor="first_name" style={{ display: 'block' }}>
                                                     First Name
                                                 </label>
@@ -278,7 +252,8 @@ class MainMenu extends Component {
                                 <h3>{this.state.type ? this.state.type : 'Default Title'}</h3>
                             </Col>
                             <Col md={4}>
-                                <Button onClick={this.handleShow}>Add</Button>
+                                {!this.state.type == "Neighbor" && <Button onClick={this.handleShow}>Add</Button> }
+                                
                             </Col>
                         </Row>
                     </Panel.Heading>
@@ -311,4 +286,4 @@ function mapDispatchToProps(dispatch) {
 export default reduxForm({
     validate,
     form: "AddForm"
-})(connect(mapStateToProps, { registerUser, addUserAddress, getUsersByRole, createVisit, loadAddress })(MainMenu))
+})(connect(mapStateToProps, { registerUser, addUserAddress, getUsersByRole, createVisit, loadAddress,createVisitCode })(MainMenu))
