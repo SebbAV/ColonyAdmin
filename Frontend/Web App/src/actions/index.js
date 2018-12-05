@@ -12,6 +12,7 @@ export const LOAD_EMP = 'load_emp';
 export const ADD_VISIT = 'add_visit';
 export const GET_ADDRESS ='get_address';
 export const GET_VISITORS ='get_visitors';
+export const UPDATE_USER = 'update_user';
 
 export function loginUser(values, callback) {
     return (axios.post(`${API_URL}/v1/user/login`, values).then((response) => {
@@ -82,6 +83,18 @@ export function loadAddress(values){
         type: GET_ADDRESS,
         payload: request
     }
+}
+export function updateUser(values,callback){
+
+    return (axios.put(`${API_URL}/v1/user`,values).then(() => {
+        callback()
+        return {
+            type: UPDATE_USER,
+            payload: request
+        }
+    })
+    )
+
 }
 
 export function sample(values) {

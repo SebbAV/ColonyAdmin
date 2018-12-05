@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import socketIOClient from 'socket.io-client'
 import { API_URL } from '../actions/index'
-import {Panel,Row,Col} from 'react-bootstrap'
+import { Panel, Row, Col } from 'react-bootstrap'
 
+const socket = socketIOClient(API_URL)
 class SosTable extends Component {
     constructor() {
         super();
@@ -11,33 +12,37 @@ class SosTable extends Component {
         }
     }
     componentDidMount() {
-        const socket = socketIOClient(API_URL)
-        socket.on("sos_request", data => this.setState({ response: [...this.state.response,data] }));
+
+        socket.on("sos_request", data => this.setState({ response: [...this.state.response, data] }));
+
+    }
+
+    closeSocketSession(address){
+        console.log(address)
+        socket.emit("sos_finish",address)
     }
     createSOSPanel() {
-        return (
-            <div>
-                <Panel bsClass="panel-color">
-                    <Panel.Body>
-                        <Row>
-                            <Col xs={8} md={10}>
-                                <h3 id="lblName">
-                                    {this.props.Name ? this.props.Name : 'Name'}
-                                </h3>
-                                <label id="lblAddress">
-                                    {this.props.Address ? this.props.Name : 'Address'}
-                                </label>
-                            </Col>
-                            <Col xs={8} md={10}>
-                                <label id="lblDescription">
-                                    {this.props.Code ? this.props.Name : 'Description'}
-                                </label>
-                            </Col>
-                        </Row>
-                    </Panel.Body>
-                </Panel>
-            </div>
-        )
+        return _.map(this.state.response, sos => {
+            return (
+                <div key={sos.address} onClick={this.closeSocketSession.bind(this,sos.address)}>
+                    <Panel bsClass="panel-color">
+                        <Panel.Body>
+                            <Row>
+                                <Col xs={8} md={10}>
+                                    <h3 id="lblName">
+                                        {sos.address ? sos.address: 'Address'}
+                                    </h3>
+                                    <label id="lblAddress">
+                                        {sos.address_number? sos.address_number : 'Address Number'}
+                                    </label>
+                                </Col>
+                            </Row>
+                        </Panel.Body>
+                    </Panel>
+                </div>
+            )
+        })
+
     }
     render() {
         console.log(this.state.response)
